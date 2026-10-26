@@ -14,6 +14,7 @@ Prepared by LatentIQ on 23 Oct 2026, from the research document *Architecture Fi
 | 03 | [`docs/03-features-and-functionality.md`](docs/03-features-and-functionality.md) | Every feature with rules, permissions and acceptance criteria; automations; dashboards; integrations; NFRs |
 | 04 | [`DESIGN.md`](DESIGN.md) | Design tokens (contrast-checked), components, 23 screens, interaction, accessibility |
 | 05 | [`docs/05-build-phases.md`](docs/05-build-phases.md) | Discovery, 19 sprints across 4 phases, pilot, gates |
+| 06 | [`docs/06-firm-inputs-request-list.md`](docs/06-firm-inputs-request-list.md) | Everything the firm must provide (121 items), when it's needed, and a ready-to-send request email |
 | – | [`TRACKER.md`](TRACKER.md) · [`tracker.csv`](tracker.csv) | All 118 items (58 features, 10 automations, 5 dashboards, 13 integrations, 10 NFRs, 18 tasks, 4 gates) with phase, sprint, dependencies and status |
 | – | [`BUILD_PROMPT.md`](BUILD_PROMPT.md) | Master prompt, sprint kickoff prompts and review prompt for a coding agent |
 | – | [`CLAUDE.md`](CLAUDE.md) | Repo rules for coding agents |
