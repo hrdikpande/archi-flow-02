@@ -51,7 +51,7 @@ The 12-minute cut uses the same pipeline with its own scenes (`scenes-short/`) a
 product-walkthrough/pipeline/run-short.sh /tmp/wt-short product-walkthrough/short
 ```
 
-`WT_SUBS_SAFE=1` (recording) drops the card footer and keeps card content above the subtitle area; `BURN_SUBS=1` (planning and rendering) draws each subtitle cue into the picture and raises the role lower-thirds above it. The soft subtitle track and the `.srt` file are written as usual.
+`WT_SUBS_SAFE=1` (recording) drops the card footer and keeps card content above the subtitle area; `BURN_SUBS=1` (planning and rendering) draws each subtitle cue into the picture, raises the role lower-thirds above it, and leaves the soft subtitle track out of the MP4 (players would show captions twice); the `.srt` file is written as usual.
 
 Useful while editing:
 

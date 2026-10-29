@@ -49,7 +49,7 @@ with open(os.path.join(OUT, "chapters.txt"), "w") as f:
 
 # ---------------- narration-script.md
 with open(os.path.join(OUT, "narration-script.md"), "w") as f:
-    f.write(f"# DrawingOps · {CUT}narration script\n\nThe complete narration, in the order and at the times it plays in `{NAME}`. Generated from the recording (`pipeline/report.py`), so it always matches the video. The same text is embedded as a subtitle track and saved as `{NAME[:-4]}.srt`{', and burned into the picture as open captions' if SHORT else ''}.\n\n")
+    f.write(f"# DrawingOps · {CUT}narration script\n\nThe complete narration, in the order and at the times it plays in `{NAME}`. Generated from the recording (`pipeline/report.py`), so it always matches the video. The same text is {'burned into the picture as subtitles' if SHORT else 'embedded as a subtitle track'} and saved as `{NAME[:-4]}.srt`.\n\n")
     f.write(f"Voice: Kokoro-82M (Apache-2.0), voice `af_heart`, synthesised offline. Total running time {ts(S['duration'])}.\n\n")
     for c in chapters:
         f.write(f'## {c["ch"]["num"]} · {c["ch"]["title"]}  ({ts(c["t0"])})\n\n')

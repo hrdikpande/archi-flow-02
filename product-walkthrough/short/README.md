@@ -5,7 +5,7 @@ A shorter, client-facing cut of the [complete walkthrough](../README.md). Every 
 | File | What it is |
 |---|---|
 | [`drawingops-walkthrough-12min.mp4`](drawingops-walkthrough-12min.mp4) | The video: 11:42, 1920×1080, 30 fps, H.264 + AAC, English narration, burned-in English subtitles, 14 chapter markers |
-| [`drawingops-walkthrough-12min.srt`](drawingops-walkthrough-12min.srt) | The same subtitles as a file. A matching soft track is also inside the MP4, switched off by default so captions never show twice |
+| [`drawingops-walkthrough-12min.srt`](drawingops-walkthrough-12min.srt) | The same subtitles as a file, for platforms that index or translate captions. The MP4 has no separate subtitle track, so captions never show twice |
 | [`chapters.txt`](chapters.txt) | Chapter timestamps (paste into YouTube/Vimeo descriptions) |
 | [`video-storyboard.md`](video-storyboard.md) | Every scene: time, screen, on-screen actions and narration |
 | [`narration-script.md`](narration-script.md) | The complete narration in video order, with times |

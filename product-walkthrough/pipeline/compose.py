@@ -6,7 +6,7 @@ and a step ends when both its actions and its narration are done.
   python compose.py BUILD render [N]      -> BUILD/parts/chNN.mp4, N worker processes (default 3)
   python compose.py BUILD mux OUT.mp4     -> narration mix, subtitles, chapter marks, final file
   python compose.py BUILD all OUT.mp4     -> all three
-BURN_SUBS=1 draws the subtitles into the picture (open captions) and turns the soft track off by default;
+BURN_SUBS=1 draws the subtitles into the picture (open captions) and leaves the soft track out (captions.srt has it);
 WT_TITLE sets the file's title metadata.
 """
 import bisect, json, math, os, subprocess, sys
@@ -310,13 +310,34 @@ def wrap(text, width=64):
         else: lines[-1] = (lines[-1] + " " + w).strip()
     return lines
 
+def balanced_groups(text, k):
+    """Split a sentence into k word groups of similar length, preferring breaks after punctuation."""
+    words = text.split(); target = len(text) / k; groups, cur = [], []
+    for i, w in enumerate(words):
+        cur.append(w); n = len(" ".join(cur)); left = len(words) - i - 1
+        if len(groups) < k - 1 and left and (n >= target or (n >= 0.7 * target and w[-1] in ",;:")):
+            groups.append(" ".join(cur)); cur = []
+    return groups + [" ".join(cur)] if cur else groups
+
+def two_lines(text, width=64):
+    """One line if short, else two lines of similar length (break after punctuation if close); None if it cannot fit."""
+    if len(text) <= 52: return [text]
+    words = text.split(); best = None
+    for i in range(1, len(words)):
+        a, b = " ".join(words[:i]), " ".join(words[i:])
+        if max(len(a), len(b)) > width: continue
+        score = abs(len(a) - len(b)) - (8 if a[-1] in ",;:" else 0)
+        if best is None or score < best[0]: best = (score, [a, b])
+    return best[1] if best else None
+
 def subtitle_cues(S):
     cues = []
     for s in S["subs"]:
-        lines = wrap(s["text"])
-        if len(lines) <= 2: cues.append((s["t0"], s["t1"], "\n".join(lines))); continue
-        # Split long sentences into two-line cues, timed by character share.
-        chunks = ["\n".join(lines[i:i + 2]) for i in range(0, len(lines), 2)]
+        if two_lines(s["text"]): cues.append((s["t0"], s["t1"], "\n".join(two_lines(s["text"])))); continue
+        # Split long sentences into balanced two-line cues (no one-word leftovers), timed by character share.
+        k = math.ceil(len(wrap(s["text"])) / 2)
+        while any(two_lines(g) is None for g in balanced_groups(s["text"], k)): k += 1
+        chunks = ["\n".join(two_lines(g)) for g in balanced_groups(s["text"], k)]
         total = sum(len(c) for c in chunks); t = s["t0"]
         for c in chunks:
             d = (s["t1"] - s["t0"]) * len(c) / total; cues.append((t, t + d, c)); t += d
@@ -347,13 +368,14 @@ def mux(B, out):
             f.write(f"[CHAPTER]\nTIMEBASE=1/1000\nSTART={int(c['t'] * 1000)}\nEND={int(end * 1000)}\ntitle={c['num']} {c['title']}\n")
     video = os.path.join(B, "video-only.mp4")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", os.path.join(B, "parts", "list.txt"), "-c", "copy", video], check=True)
+    # With burned-in subtitles there is no soft track (MP4 players would switch it on and show captions twice);
+    # the same cues are in captions.srt. The length is the planned duration, so the closing card is kept in full.
+    subs = [] if BURN_SUBS else ["-map", "2:s", "-c:s", "mov_text", "-metadata:s:s:0", "language=eng"]
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", video, "-i", wav, "-i", srt, "-i", meta,
-                    "-map", "0:v", "-map", "1:a", "-map", "2:s", "-map_metadata", "3", "-map_chapters", "3",
+                    "-map", "0:v", "-map", "1:a", *subs, "-map_metadata", "3", "-map_chapters", "3",
                     "-c:v", "copy", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11,aresample=24000,alimiter=limit=0.84:level=false", "-c:a", "aac", "-b:a", os.environ.get("AUDIO_BITRATE", "48k"), "-ar", "24000", "-ac", "1",
-                    "-c:s", "mov_text", "-metadata:s:s:0", "language=eng", "-metadata:s:a:0", "language=eng",
-                    # with burned-in subtitles the soft track stays available but off, so players never show captions twice
-                    *(["-disposition:s:0", "0"] if BURN_SUBS else []),
-                    "-movflags", "+faststart", "-shortest", out], check=True)
+                    "-metadata:s:a:0", "language=eng",
+                    "-movflags", "+faststart", "-t", f"{S['duration']:.3f}", out], check=True)
     print("wrote", out)
 
 if __name__ == "__main__":
