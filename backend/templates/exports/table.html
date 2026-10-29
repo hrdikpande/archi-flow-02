@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<style>
+  @page { size: A3 landscape; margin: 14mm 12mm 16mm; @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt "DejaVu Sans"; color: #5f6368; } @bottom-left { content: "{{ firm }} · DrawingOps · generated {{ generated }}"; font: 8pt "DejaVu Sans"; color: #5f6368; } }
+  body { font: 8.5pt/1.35 "DejaVu Sans", sans-serif; color: #1f2328; }
+  h1 { font-size: 14pt; margin: 0 0 2mm; }
+  p.meta { margin: 0 0 4mm; color: #5f6368; }
+  table { width: 100%; border-collapse: collapse; }
+  thead { display: table-header-group; }
+  th { text-align: left; background: #eef1f5; border-bottom: 1px solid #c9d1dc; padding: 1.5mm 2mm; }
+  td { border-bottom: 1px solid #e3e6ea; padding: 1.2mm 2mm; vertical-align: top; font-variant-numeric: tabular-nums; }
+  tr { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+<h1>{{ title }}</h1>
+<p class="meta">{% if subtitle %}{{ subtitle }} · {% endif %}{{ count }} row{{ count|pluralize }}{% if filters %} · Filters: {{ filters }}{% endif %}</p>
+<table>
+  <thead><tr>{% for c in columns %}<th>{{ c }}</th>{% endfor %}</tr></thead>
+  <tbody>{% for row in rows %}<tr>{% for v in row %}<td>{{ v }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+</table>
+</body>
+</html>

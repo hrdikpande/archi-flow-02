@@ -1,0 +1,6 @@
+Hello {{ name }},
+
+Your updates for {{ date|date:"d-M-Y" }}:
+{% for i in items %}
+- {{ i.title }}{% if i.body %}: {{ i.body }}{% endif %}{% if i.link %}
+  {{ i.link }}{% endif %}{% endfor %}

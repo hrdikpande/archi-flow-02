@@ -25,10 +25,11 @@ Drawing and deliverable control for an architecture/MEP design firm: sheet regis
 - No real email outside production. No secrets in the repo.
 - Update `TRACKER.md` status and notes as you work; only humans mark "Done".
 
-## Commands (to be created in S1)
+## Commands
 
 ```bash
-make up          # docker compose up (web, worker, beat, postgres, valkey, minio, caddy, mail catcher)
+make up          # docker compose up (web, worker, beat, postgres, valkey, seaweedfs, caddy, mailpit)
+make seed        # demo users for local use and e2e (never in production)
 make migrate     # django migrations
 make test        # pytest + vitest
 make e2e         # playwright against the compose stack

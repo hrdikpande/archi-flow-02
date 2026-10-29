@@ -1,0 +1,9 @@
+#!/bin/sh
+# Celery worker. Mingle, gossip and heartbeat are off: they poll Redis constantly, which costs
+# money on Upstash (per-command pricing) and is not needed with a single worker service.
+set -eu
+exec celery -A config worker \
+  -Q default,email,sweeps,pdf \
+  --concurrency "${CELERY_CONCURRENCY:-2}" \
+  --without-mingle --without-gossip --without-heartbeat \
+  --max-tasks-per-child 200 --loglevel INFO

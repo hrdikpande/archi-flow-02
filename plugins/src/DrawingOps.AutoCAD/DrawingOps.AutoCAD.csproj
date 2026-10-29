@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- I-03 AutoCAD plugin. Build on Windows with AutoCAD installed:
+         dotnet build -c Release -p:AcadVersion=2024
+       Load with NETLOAD, or autoload via a bundle (PackageContents.xml). -->
+  <PropertyGroup>
+    <AcadVersion Condition="'$(AcadVersion)' == ''">2024</AcadVersion>
+    <TargetFramework Condition="'$(AcadVersion)' &gt;= '2025'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(AcadVersion)' &lt; '2025'">net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD $(AcadVersion)</AcadDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AcCoreMgd"><HintPath>$(AcadDir)\accoremgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="AcDbMgd"><HintPath>$(AcadDir)\acdbmgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="AcMgd"><HintPath>$(AcadDir)\acmgd.dll</HintPath><Private>false</Private></Reference>
+    <ProjectReference Include="../DrawingOps.Sync.Core/DrawingOps.Sync.Core.csproj" />
+  </ItemGroup>
+</Project>

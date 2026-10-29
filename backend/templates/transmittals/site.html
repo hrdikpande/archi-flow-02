@@ -1,0 +1,34 @@
+{% extends "transmittals/public_base.html" %}
+{% block title %}{{ project.code }} current drawings · {{ firm }}{% endblock %}
+{% block content %}
+<div class="card site">
+  <p class="muted" style="margin:0 0 4px;font-weight:600">{{ firm }}</p>
+  <h1 style="margin:0 0 4px">Current drawings</h1>
+  <p class="muted" style="margin:0 0 12px">{{ project.code }} {{ project.name }} · latest issued revision of each sheet</p>
+  <form method="get" role="search" class="site-search">
+    <label for="q" class="muted" style="display:block;font-size:13px;margin-bottom:4px">Find a sheet</label>
+    <div style="display:flex;gap:8px">
+      <input id="q" name="q" value="{{ q }}" inputmode="search" placeholder="Sheet number or title" autocomplete="off">
+      <button class="btn" type="submit">Search</button>
+    </div>
+  </form>
+  {% if rows %}
+  <ul class="site-list" aria-label="Current issued sheets">
+    {% for row in rows %}
+    <li>
+      <a href="r/{{ row.revision.pk }}" class="site-row">
+        <span><span class="mono" style="font-weight:600">{{ row.revision.sheet.number }}</span> <span class="mono muted">{{ row.revision.code }}</span><br>
+        <span>{{ row.revision.sheet.title }}</span><br>
+        <span class="muted" style="font-size:12px">{{ row.purpose }}</span></span>
+        <span aria-hidden="true" class="site-dl">↓</span>
+        <span class="sr">Download {{ row.revision.sheet.number }} {{ row.revision.code }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>{% if q %}No current sheet matches “{{ q }}”.{% else %}Nothing has been issued on this project yet.{% endif %}</p>
+  {% endif %}
+  <p class="muted" style="margin:16px 0 0;font-size:12px">For {{ contact.full_name }}. This link works until {{ expires }}. Superseded revisions are not shown: use only these for construction.</p>
+</div>
+{% endblock %}

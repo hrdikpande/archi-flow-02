@@ -1,0 +1,7 @@
+{% extends "email/base.html" %}
+{% block content %}
+<p style="margin:0 0 12px">Hello {{ name }},</p>
+<p style="margin:0 0 8px;font-weight:600">{{ title }}</p>
+{% if body %}<p style="margin:0 0 16px;white-space:pre-wrap">{{ body }}</p>{% endif %}
+{% if link %}<p style="margin:0"><a href="{{ link }}" style="display:inline-block;background:#0B5FA5;color:#FFFFFF;text-decoration:none;padding:8px 16px;border-radius:4px">Open in DrawingOps</a></p>{% endif %}
+{% endblock %}

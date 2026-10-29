@@ -1,0 +1,48 @@
+{
+	admin off
+	# Production sets SITE_ADDRESS to the real hostname so Caddy obtains a certificate.
+	# Caddy runs as a non-root user, so it listens on 8080/8443 (the host maps 80/443).
+	http_port 8080
+	https_port 8443
+	auto_https disable_redirects
+}
+
+{$SITE_ADDRESS::8080} {
+	encode zstd gzip
+
+	header {
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://accounts.google.com https://login.microsoftonline.com"
+		X-Content-Type-Options nosniff
+		Referrer-Policy same-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		X-Frame-Options DENY
+		-Server
+	}
+
+	# Prometheus metrics are for the internal network only (N-05).
+	handle /metrics* {
+		respond 404
+	}
+
+	# Object storage on the same origin: presigned URLs need no CORS (docs/decisions.md DD-006).
+	handle /{$S3_BUCKET:drawingops}/* {
+		request_body {
+			max_size 210MB
+		}
+		reverse_proxy seaweedfs:8333
+	}
+
+	@backend path /api/* /_allauth/* /accounts/* /django-admin/* /django-static/* /t/* /site/* /integrations/* /healthz /livez
+	handle @backend {
+		request_header X-Request-ID {http.request.uuid}
+		reverse_proxy web:8000
+	}
+
+	handle {
+		root * /srv
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+		try_files {path} /index.html
+		file_server
+	}
+}

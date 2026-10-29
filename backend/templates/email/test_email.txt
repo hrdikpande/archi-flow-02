@@ -1,0 +1,5 @@
+Hello {{ name }},
+
+This is a test email from DrawingOps for {{ organisation }}. If you can read it, outbound email works.
+
+Open DrawingOps: {{ frontend_url }}

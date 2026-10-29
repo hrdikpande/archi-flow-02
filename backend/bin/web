@@ -1,0 +1,8 @@
+#!/bin/sh
+# Railway web service (also usable anywhere $PORT is set). Migrations run as the pre-deploy step.
+set -eu
+exec gunicorn config.wsgi:application \
+  --bind "0.0.0.0:${PORT:-8000}" \
+  --workers "${WEB_CONCURRENCY:-3}" --threads "${WEB_THREADS:-4}" \
+  --timeout 60 --graceful-timeout 30 --keep-alive 5 \
+  --forwarded-allow-ips="*" --access-logfile -

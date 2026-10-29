@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copy to %APPDATA%\Autodesk\Revit\Addins\<version>\ with DrawingOps.Revit.dll. -->
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Name>DrawingOps: Sync sheets</Name>
+    <Assembly>DrawingOps.Revit.dll</Assembly>
+    <AddInId>6E3C2C6B-5D0F-4F0A-9C1E-2B7D8A4F1E21</AddInId>
+    <FullClassName>DrawingOps.Revit.SyncSheetsCommand</FullClassName>
+    <Text>Sync sheets to DrawingOps</Text>
+    <VendorId>LATENTIQ</VendorId>
+    <VendorDescription>LatentIQ, DrawingOps</VendorDescription>
+  </AddIn>
+</RevitAddIns>

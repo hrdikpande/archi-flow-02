@@ -1,0 +1,8 @@
+{% extends "email/base.html" %}
+{% block content %}
+<p style="margin:0 0 12px">Dear {{ name }},</p>
+<p style="margin:0 0 12px">{{ sender }} at {{ firm }} has given you a link to the current issued drawings for <strong>{{ project }}</strong>. It always shows the latest issued revision of each sheet.</p>
+<p style="margin:0 0 12px"><a href="{{ url }}" style="display:inline-block;background:#0B5FA5;color:#FFFFFF;text-decoration:none;padding:12px 18px;border-radius:4px">Open current drawings</a></p>
+<p style="margin:0;color:#556172;font-size:12px">The link is for you only and works until {{ expires }}.</p>
+{% endblock %}
+{% block footer %}Sent by {{ firm }} with DrawingOps.{% endblock %}

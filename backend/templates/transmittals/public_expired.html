@@ -1,0 +1,3 @@
+{% extends "transmittals/public_base.html" %}
+{% block title %}Link expired{% endblock %}
+{% block content %}<div class="card"><p class="muted" style="margin:0 0 8px;font-weight:600">{{ firm }}</p><h1>This link has expired</h1><p>Transmittal <span class="mono">{{ link.transmittal.number }}</span>. Contact {{ sender }} at <a class="link" href="mailto:{{ sender_email }}">{{ sender_email }}</a> for a new link.</p></div>{% endblock %}

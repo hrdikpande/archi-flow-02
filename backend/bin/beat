@@ -1,0 +1,5 @@
+#!/bin/sh
+# Celery beat: the schedule lives in config/settings/base.py (CELERY_BEAT_SCHEDULE) and the
+# database (django-celery-beat). Run exactly one beat. Or use bin/tick from a cron instead.
+set -eu
+exec celery -A config beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel INFO

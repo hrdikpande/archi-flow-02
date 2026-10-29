@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ number }}</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt "DejaVu Sans"; color: #556172; } }
+  body { font: 9.5pt/1.4 "DejaVu Sans", sans-serif; color: #16202C; }
+  h1 { font-size: 16pt; margin: 0 0 2mm; }
+  .firm { font-size: 11pt; font-weight: 700; margin-bottom: 6mm; }
+  .number { font-family: "DejaVu Sans Mono", monospace; }
+  .meta { width: 100%; border-collapse: collapse; margin: 4mm 0 6mm; }
+  .meta th { text-align: left; width: 32mm; color: #556172; font-weight: 400; padding: 1mm 0; vertical-align: top; }
+  .meta td { padding: 1mm 0; }
+  table.sheets { width: 100%; border-collapse: collapse; }
+  table.sheets th { background: #F1F3F6; text-align: left; padding: 2mm; border-bottom: 1px solid #D9DEE5; font-size: 8.5pt; }
+  table.sheets td { padding: 2mm; border-bottom: 1px solid #D9DEE5; }
+  .mono { font-family: "DejaVu Sans Mono", monospace; white-space: nowrap; }
+  .preview { position: fixed; top: 40%; left: 10%; font-size: 64pt; color: rgba(11, 95, 165, 0.12); transform: rotate(-30deg); }
+  .note { margin-top: 6mm; padding: 3mm; background: #F7F8FA; border: 1px solid #D9DEE5; white-space: pre-wrap; }
+  .foot { margin-top: 10mm; color: #556172; font-size: 8pt; }
+</style>
+</head>
+<body>
+  {% if preview %}<div class="preview">PREVIEW</div>{% endif %}
+  <div class="firm">{{ firm }}</div>
+  <h1>Drawing transmittal <span class="number">{{ number }}</span></h1>
+  <table class="meta">
+    <tr><th>Project</th><td>{{ project }}</td></tr>
+    <tr><th>Date</th><td>{{ date }}</td></tr>
+    <tr><th>Purpose</th><td><strong>{{ purpose }}</strong>{% if suitability %} · Suitability {{ suitability }}{% endif %}</td></tr>
+    <tr><th>From</th><td>{{ sender }}</td></tr>
+    <tr><th>To</th><td>{% for r in recipients %}{{ r.name }}{% if r.organisation %} ({{ r.organisation }}){% endif %}{% if r.delivery == "By hand" %} · by hand{% endif %}{% if not forloop.last %}<br>{% endif %}{% endfor %}</td></tr>
+    {% if supersedes %}<tr><th>Corrects</th><td class="mono">{{ supersedes }}</td></tr>{% endif %}
+  </table>
+  <table class="sheets">
+    <thead><tr><th>#</th><th>Sheet</th><th>Title</th><th>Revision</th><th>Purpose</th></tr></thead>
+    <tbody>
+      {% for r in rows %}<tr><td>{{ forloop.counter }}</td><td class="mono">{{ r.number }}</td><td>{{ r.title }}</td><td class="mono">{{ r.revision }}</td><td>{{ r.purpose }}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  {% if note %}<div class="note">{{ note }}</div>{% endif %}
+  <p class="foot">{{ rows|length }} sheet{{ rows|length|pluralize }}. Earlier revisions of these sheets are superseded and must not be used. Issued with DrawingOps.</p>
+</body>
+</html>

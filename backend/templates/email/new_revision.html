@@ -1,0 +1,9 @@
+{% extends "email/base.html" %}
+{% block content %}
+<p style="margin:0 0 12px">Dear {{ name }},</p>
+<p style="margin:0 0 12px">{{ firm }} has issued revision <strong>{{ revision }}</strong> of <span style="font-family:monospace">{{ number }}</span> {{ title }} on {{ project }}.</p>
+<p style="margin:0 0 16px;color:#A61B1B;font-weight:600">The revision you received earlier ({{ old_revision }}) is superseded. Please do not use it.</p>
+<p style="margin:0 0 12px"><a href="{{ url }}" style="display:inline-block;background:#0B5FA5;color:#FFFFFF;text-decoration:none;padding:8px 16px;border-radius:4px">Download {{ number }} {{ revision }}</a></p>
+<p style="margin:0;color:#556172;font-size:12px">The link is valid until {{ expires }}.</p>
+{% endblock %}
+{% block footer %}Sent by {{ firm }} with DrawingOps because you received an earlier revision of this drawing.{% endblock %}

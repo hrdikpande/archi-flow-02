@@ -40,8 +40,8 @@ flowchart TB
   Plugins["Revit / AutoCAD plugins (P2)"] -->|HTTPS + API token| Caddy
   Caddy["Caddy\nTLS, static SPA, reverse proxy"] --> Web
   Web["Web: Django + DRF\n(gunicorn)"] --> PG[("PostgreSQL 16")]
-  Web --> Redis[("Redis / Valkey\nbroker + cache")]
-  Web --> S3[("Object storage\nMinIO or cloud S3")]
+  Web --> Redis[("Valkey\nbroker + cache")]
+  Web --> S3[("Object storage\nSeaweedFS or cloud S3")]
   Beat["Celery beat\nschedules sweeps"] --> Redis
   Worker["Celery workers\nqueues: default, pdf, email, sweeps"] --> PG
   Worker --> S3
@@ -52,12 +52,12 @@ flowchart TB
 
 | Container | Responsibility |
 |---|---|
-| Caddy | HTTPS certificates, serves the built SPA, proxies `/api`, `/admin`, `/t/` (external transmittal links) to Django |
+| Caddy | HTTPS certificates, serves the built SPA, proxies `/api`, `/_allauth`, `/django-admin` (support admin, DD-009), `/t/` (external transmittal links) to Django, and `/<bucket>/*` to object storage on the same origin (DD-006) |
 | Web | REST API, auth, permissions, business services, Django admin for support staff |
 | Celery workers | PDF processing (hash, page check, thumbnail, watermark, cover sheet), email, exports, outbox dispatch, sweeps |
 | Celery beat | Schedules A-01, A-02, A-05, A-06 (P1) and A-07, A-08, A-10 (later), dashboard refresh, digests |
 | PostgreSQL | All data, full-text search, materialised views for dashboards |
-| Redis / Valkey | Celery broker, cache, rate limits |
+| Valkey | Celery broker, cache, rate limits (Valkey, not Redis ≥ 7.4, for licence reasons; DD-006) |
 | Object storage | Issued PDFs, redlines, cover sheets, exports, watermarked copies (cache) |
 
 ## 3. Technology choices
@@ -72,8 +72,8 @@ Versions are those seen on PyPI and npm on 23 Oct 2026; pin exact versions when 
 | Jobs | Celery 5.6, django-celery-beat 2.9 | BSD | Sweeps, PDF work, email; schedules editable by admin |
 | Database | PostgreSQL 16 (with `pg_trgm`) | PostgreSQL | Full-text search, JSONB, materialised views, row-level reliability |
 | Driver | psycopg 3.3 | LGPL-3.0 | Standard driver; used unmodified as a library |
-| Broker/cache | Redis 7 or Valkey | BSD | Celery broker and cache |
-| Object storage | MinIO (on-prem) or AWS S3 / Azure Blob (cloud) via django-storages 1.14 | django-storages BSD-3-Clause | S3 API keeps hosting options open |
+| Broker/cache | Valkey 8 | BSD-3-Clause | Celery broker and cache. Redis ≥ 7.4 is RSAL/SSPL and Redis 8 adds AGPL, so it is not used (DD-006) |
+| Object storage | SeaweedFS (on-prem/dev, Apache-2.0) or AWS S3 / Azure Blob (cloud) via the S3 API (boto3). MinIO was dropped: AGPL-3.0 and archived upstream (DD-006, docs/06 R-01) | django-storages BSD-3-Clause | S3 API keeps hosting options open |
 | PDF | pikepdf 10 (MPL-2.0), pypdfium2 5 (BSD-3/Apache-2.0), WeasyPrint (BSD) | as listed | Page checks, thumbnails, watermark overlay, HTML-to-PDF cover sheets |
 | OCR (P2) | OCRmyPDF 17 | MPL-2.0 | Text for scanned PDFs and title-block reading (F-50) |
 | Excel | openpyxl 3.1 | MIT | Register import (F-05) and exports (F-52) |
@@ -97,7 +97,8 @@ drawingops/
       accounts/              User, OrgRole, ApiToken, SSO adapters
       contacts/              ExternalOrg, Contact                         (F-43)
       projects/              Project, Stage, StageTemplate, Package, ProjectMembership  (F-01..03, F-49)
-      register/              Sheet, SheetRevision, FileObject, NamingRule, imports      (F-04..08, F-35, F-41, F-46..48, F-54)
+      files/                 Upload, FileObject (verified, deduplicated; DD-004, DD-024)
+      register/              Sheet, SheetRevision, NamingRule, imports, title blocks    (F-04..08, F-35, F-41, F-46..48, F-54)
       workflow/              state machine, StatusTransition, Review, Checklist (P2)     (F-10..13)
       transmittals/          Transmittal, TransmittalItem, TransmittalRecipient          (F-14, F-15)
       people/                StaffProfile, Leave, Allocation, TimeEntry, Timesheet       (F-16..19)
@@ -107,24 +108,30 @@ drawingops/
       search/                search views and indexes                                   (F-44)
       exports/               export jobs                                                (F-52)
       audit/                 AuditEvent, middleware                                     (F-39)
+      outbox/                OutboxEvent, OutboxDelivery, @handles dispatch             (§7)
       comments/        (P2)  ClientComment, ClientApproval, InboundEmail                (F-24..26)
       billing/         (P2)  BillingSignal                                              (F-27, F-28)
       ca/              (P3)  RFI, Submittal, SiteReport, ChangeOrder                    (F-30..33)
       coordination/    (P3)  ClashIssue, BCF import                                     (F-34)
-      knowledge/       (P3)  cross-project knowledge search, templates                  (F-58)
-      integrations/          excel, storage connector (P2), cad_sync (P2), accounting (P2), aps (P2)
-      intelligence/    (P4)  feature store, models, predictions                         (F-55..57)
+      knowledge/       (P3)  Decision log, cross-project knowledge search               (F-58)
+      cadsync/         (P2)  SyncSource, SyncBatch, SyncProposal, CadFileEvent (plugins, storage connector)
+      intelligence/    (P4)  FeatureSnapshot, ModelRun, Prediction, WorkloadForecast, Finding (F-55..57)
     tests/
   frontend/
     src/app/                 shell, routing, auth guard, layout
     src/features/<module>/   pages, components, hooks per module
     src/components/ui/       design-system components (DESIGN.md)
     src/lib/api/             generated OpenAPI client + TanStack Query hooks
-  plugins/
-    revit-addin/       (P2)
-    autocad-plugin/    (P2)
+  plugins/             (P2)
+    src/DrawingOps.Sync.Core/   netstandard2.0: sheet collection, API client (tested in CI)
+    src/DrawingOps.Revit/       Revit add-in shell (firm's Revit API assemblies; DD-033)
+    src/DrawingOps.AutoCAD/     AutoCAD plugin shell (firm's AutoCAD .NET assemblies; DD-033)
+    tests/DrawingOps.Sync.Core.Tests/
   deploy/
-    docker-compose.yml, Caddyfile, backup/, env.example
+    docker-compose.yml, caddy/, backup/, env.example        self-hosted stack
+    railway/env.example, aws/ (S3 CORS, IAM, bucket policy)  managed stack (DD-025)
+  backend/bin/, backend/railway/  web, worker, beat, tick entry points and Railway configs
+  frontend/vercel.json, frontend/scripts/vercel-*.mjs   Vercel build and backend proxy
   docs/                      this document set
 ```
 
@@ -299,7 +306,10 @@ sequenceDiagram
 - **Sign-in:** django-allauth with OIDC providers for Google Workspace and Microsoft 365 (whichever the firm uses), plus local accounts with TOTP for admins and break-glass access (F-40).
 - **Sessions:** SPA and API share one origin behind Caddy; secure, HTTP-only, SameSite=Lax session cookie plus CSRF token.
 - **API tokens:** for CAD plugins and integrations; hashed at rest, scoped (`cad_sync:write`, `accounting:read`), expiring, revocable.
-- **Authorisation:** one permission map (`accounts/permissions.py`) from action to allowed org and project roles, mirroring the matrix in spec §17. Enforced in services (the source of truth) and in DRF permission classes; list querysets are always filtered by membership. A generated test runs every endpoint × role pair.
+- **Authorisation:** one permission map (`accounts/permissions.py`) from action to allowed org and project roles, mirroring the matrix in spec §17. Enforced in services (the source of truth) and in DRF permission classes; list querysets are always filtered by membership. A generated test runs every endpoint × role pair. Ids in request bodies resolve only inside the caller's organisation (`OrgPrimaryKeyRelatedField`, DD-030), and uploads can only be attached by the person who uploaded them.
+- **Outbound calls:** Admin-configured URLs (billing webhook) go through `core/net.py`: public addresses only, pinned connection, no redirects (DD-029).
+- **Generated PDFs:** `core/pdf.render_pdf` loads only `data:` URIs, so rendering never fetches a URL or reads a local file (DD-037).
+- **Sign-in limits:** by the real client IP (`TRUSTED_PROXY_COUNT`), never the proxy's: 5 failures per account per 5 min, 20 failures and 120 sign-ins per IP per minute (DD-038).
 - **External recipients:** no accounts in P1; tokenised links only. P2 site view (F-51) uses magic-link sessions limited to one project's current issued set.
 
 ## 12. API
@@ -333,7 +343,7 @@ REST under `/api/v1`, JSON, cursor pagination, filter and sort query parameters,
 | End-to-end | Playwright against Docker Compose | Create project → import register → start → submit → return → approve → issue → transmittal email → supersede → dashboard counts |
 | Accessibility | axe-core in Playwright | WCAG 2.2 AA on every P1 page (N-04) |
 | Load | k6 or Locust | 200 concurrent users, N-01 targets |
-| Security | pip-audit, npm audit, Trivy, gitleaks, OWASP ZAP baseline on staging | N-03 |
+| Security | pip-audit, npm audit, Trivy, gitleaks, Semgrep (`make sast`), ruff flake8-bandit, OWASP ZAP baseline on staging | N-03 |
 
 Coverage target: ≥ 85% lines on `services.py` and `automation/`; no target for views. [UNVERIFIED]
 
@@ -341,13 +351,13 @@ Coverage target: ≥ 85% lines on `services.py` and `automation/`; no target for
 
 | Topic | Decision |
 |---|---|
-| Hosting | Firm's choice: an Indian cloud region (AWS Mumbai/Hyderabad, Azure India, GCP Mumbai) or an on-premise server. Decide in Phase 0 (open question: data residency for hospital drawings). |
-| Topology | One VM with Docker Compose: caddy, web (2 gunicorn processes × N threads), worker ×2 (queues default/email/sweeps and pdf), beat, postgres, valkey, minio. Managed Postgres and S3 can replace containers in cloud. |
+| Hosting | Firm's choice: an Indian cloud region (AWS Mumbai/Hyderabad, Azure India, GCP Mumbai) or an on-premise server. Decide in Phase 0 (open question: data residency for hospital drawings). Managed option built: Railway (web, worker, beat) + Vercel (SPA and same-origin proxy) + Upstash Redis + Amazon S3 + SMTP (DD-025, DD-026; `docs/runbooks/deploy-railway-vercel.md`). |
+| Topology | One VM with Docker Compose: caddy, web (6 gunicorn processes × 4 threads: N-01 measured 25-Oct-2026, 200 users at p95 220 ms; 2 processes gave 580 ms), worker ×2 (queues default/email/sweeps and pdf), beat, postgres, valkey, seaweedfs. Managed Postgres and S3 can replace containers in cloud. |
 | Sizing (estimate) | 8 vCPU, 32 GB RAM, 200 GB SSD for OS/DB; object storage sized for ~2 TB over 5 years [UNVERIFIED: AS-09] |
 | Environments | dev (local compose), staging (same compose, anonymised copy of prod), prod |
 | CI/CD | GitHub Actions: lint, type-check, tests, e2e, scans → build images → push to registry → deploy staging on `main` → deploy prod on version tag with manual approval |
 | Migrations | Django migrations, expand-then-contract for breaking changes; backup before every prod deploy |
-| Backups | Postgres: nightly base backup + WAL archiving (7-day point-in-time recovery); MinIO: bucket versioning + nightly sync to a second location; monthly restore drill (N-02) |
+| Backups | Postgres: nightly base backup + WAL archiving (7-day point-in-time recovery); object storage: bucket versioning (cloud) or nightly sync to a second location (on-prem); monthly restore drill (N-02) |
 | Monitoring | Sentry/GlitchTip errors; Prometheus + Grafana (API latency, queue depth, sweep duration, email failures); uptime check on `/healthz`; alert on missing `automation_run` |
 | Logs | JSON to stdout with request ID and user ID; 30-day retention |
 | Secrets | Environment files outside the repo, or the cloud secret manager |
@@ -360,7 +370,7 @@ Coverage target: ≥ 85% lines on `services.py` and `automation/`; no target for
 | 002 | Django + DRF over FastAPI | Built-in auth, admin, ORM migrations; matches Paperless-ngx stack if option B is ever used |
 | 003 | React SPA, generated API client | Rich grid and viewer interactions; typed contract with backend |
 | 004 | PostgreSQL full-text search before a search engine | Enough for 100k sheets; one less system |
-| 005 | S3-compatible object storage | Same code for on-prem MinIO and cloud |
+| 005 | S3-compatible object storage | Same code for on-prem SeaweedFS and cloud |
 | 006 | Transactional outbox for domain events | No lost notifications or flags on worker restarts |
 | 007 | Do not build on Paperless-ngx (see `00-paperless-ngx-assessment.md`) | Its file-first model cannot hold planned sheets; most of our core is absent |
 | 008 | Clean-room implementation relative to OpenConstructionERP | It is AGPL-3.0; copying code would impose AGPL on our product |

@@ -1,0 +1,4 @@
+#!/bin/sh
+# Cron alternative to bin/beat (Railway cron, every 5 minutes): enqueue each periodic task once.
+set -eu
+exec python manage.py scheduler_tick

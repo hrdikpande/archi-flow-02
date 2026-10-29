@@ -1,0 +1,12 @@
+# Fill in the firm's SMTP relay and the on-call address before go-live.
+route:
+  receiver: ops
+  group_by: [alertname]
+  repeat_interval: 4h
+receivers:
+  - name: ops
+    email_configs:
+      - to: ops@example.invalid
+        from: alerts@example.invalid
+        smarthost: smtp.example.invalid:587
+        require_tls: true

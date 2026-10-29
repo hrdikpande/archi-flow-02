@@ -1,0 +1,8 @@
+Dear {{ name }},
+
+{{ sender }} at {{ firm }} has given you a link to the current issued drawings for {{ project }}.
+Open it on your phone or computer; it always shows the latest issued revision of each sheet.
+
+{{ url }}
+
+The link is for you only and works until {{ expires }}.

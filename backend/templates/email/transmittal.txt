@@ -1,0 +1,15 @@
+Dear {{ name }},
+
+{{ sender }} at {{ firm }} has issued {{ items|length }} drawing{{ items|length|pluralize }} on {{ project }} for {{ purpose }}.
+{% if note %}
+{{ note }}
+{% endif %}
+Transmittal {{ number }}:
+{% for i in items %}- {{ i.number }} {{ i.title }} (revision {{ i.revision }})
+{% endfor %}
+Download them here (link valid until {{ expires }}):
+{{ url }}
+
+Please acknowledge receipt: {{ url }}?ack=1
+
+Earlier revisions of these sheets are superseded. Please do not use them.

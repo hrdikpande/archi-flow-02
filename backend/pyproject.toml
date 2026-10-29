@@ -1,0 +1,87 @@
+[project]
+name = "drawingops"
+version = "0.1.0"
+description = "DrawingOps: drawing and deliverable control for architecture and MEP design firms"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "django==5.2.18",
+  "djangorestframework==3.18.3",
+  "drf-spectacular==0.30.0",
+  "django-allauth[socialaccount,mfa]==65.20.1",
+  "celery[redis]==5.6.3",
+  "django-celery-beat==2.9.0",
+  "psycopg[binary]==3.3.6",
+  "django-storages[s3]==1.14.6",
+  "boto3==1.43.118",
+  "django-environ==0.14.0",
+  "gunicorn==26.2.0",
+  "pikepdf==10.17.0",
+  "python-json-logger==4.2.0",
+  "sentry-sdk[django,celery]==2.73.0",
+  "django-prometheus==2.5.0",
+  "openpyxl==3.1.5",
+  "weasyprint==70.0",
+  "pypdfium2==5.14.0",
+  "pillow==13.0.0",
+  "defusedxml==0.7.1",
+  "scikit-learn==1.7.2",
+  "whitenoise==6.9.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest==9.1.1",
+  "pytest-django==4.14.0",
+  "pytest-cov",
+  "factory-boy==3.3.3",
+  "ruff==0.17.2",
+  "mypy==2.4.0",
+  "django-stubs[compatible-mypy]==6.1.2",
+  "djangorestframework-stubs==3.18.1",
+  "celery-types",
+  "boto3-stubs[s3]",
+  "pip-licenses==5.5.5",
+  "pip-audit==2.10.1",
+  "pyotp==2.10.0",
+  "time-machine==3.5.1",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "DJ", "S", "C4", "SIM", "RUF", "PT"]
+# RUF001-003: en dashes and × are house style in user-facing text (DESIGN.md §7).
+ignore = ["RUF012", "RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "S311", "PT018"]
+"**/tests/**" = ["S101", "S105", "S106"]
+"config/settings/*" = ["S105"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+strict_optional = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+exclude = ["migrations/", "tests/"]
+
+[tool.django-stubs]
+django_settings_module = "config.settings.test"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["test_*.py"]
+testpaths = ["tests", "apps"]
+addopts = "-q --strict-markers"
+markers = ["requires_weasyprint: needs Pango (runs in the Docker test image)"]
+
+[tool.coverage.run]
+source = ["apps"]
+omit = ["*/migrations/*", "*/tests/*"]

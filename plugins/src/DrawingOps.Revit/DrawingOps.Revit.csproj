@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- I-04 Revit add-in. Build on Windows with Revit installed:
+         dotnet build -c Release -p:RevitVersion=2024
+       Revit 2022-2024 use .NET Framework 4.8; Revit 2025+ uses .NET 8. The Revit API DLLs are
+       Autodesk's and are referenced from the local install, never committed. -->
+  <PropertyGroup>
+    <RevitVersion Condition="'$(RevitVersion)' == ''">2024</RevitVersion>
+    <TargetFramework Condition="'$(RevitVersion)' &gt;= '2025'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(RevitVersion)' &lt; '2025'">net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RevitDir Condition="'$(RevitDir)' == ''">C:\Program Files\Autodesk\Revit $(RevitVersion)</RevitDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RevitAPI"><HintPath>$(RevitDir)\RevitAPI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="RevitAPIUI"><HintPath>$(RevitDir)\RevitAPIUI.dll</HintPath><Private>false</Private></Reference>
+    <ProjectReference Include="../DrawingOps.Sync.Core/DrawingOps.Sync.Core.csproj" />
+  </ItemGroup>
+</Project>

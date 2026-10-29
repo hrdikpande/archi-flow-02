@@ -34,7 +34,7 @@ Output: discovery report (problems confirmed or rejected, baseline numbers, deci
 
 | Layer | Work |
 |---|---|
-| Repo and infra | Monorepo layout (02 §4); Docker Compose (web, worker, beat, postgres, valkey, minio, caddy); GitHub Actions: lint, type-check, tests, scans; staging auto-deploy |
+| Repo and infra | Monorepo layout (02 §4); Docker Compose (web, worker, beat, postgres, valkey, seaweedfs, caddy; DD-006); GitHub Actions: lint, type-check, tests, scans; staging auto-deploy |
 | Backend | `core` (organisation, settings, disciplines, holidays, work week), `accounts` (users, org roles, project roles, API tokens), allauth SSO + TOTP, permission map and membership-scoped querysets, `audit` (insert-only table + middleware), `contacts`, `outbox` + dispatcher, file storage (S3 API, presigned uploads), email sending with templates |
 | Frontend | Vite + React + TS scaffold; tokens as CSS variables (DESIGN.md §2); app shell, left nav, top bar, auth guard; generated API client; StatusChip, FlagPill, EmptyState, Toast primitives |
 | Quality | Permission-matrix test generator; Sentry/GlitchTip; JSON logs; `/healthz` |

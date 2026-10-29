@@ -1,0 +1,160 @@
+/* DESIGN.md §2. Every text/background pair was contrast-checked to WCAG AA (≥ 4.5:1).
+   Light is the default; dark follows the OS unless the user picks a theme (data-theme). */
+
+:root {
+  color-scheme: light;
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-muted: #f1f3f6;
+  --border: #d9dee5;
+  --text: #16202c;
+  --text-muted: #556172;
+  --primary: #0b5fa5;
+  --primary-hover: #094d86;
+  --on-primary: #ffffff;
+  --focus-ring: #2b7fff;
+  --danger: #a61b1b;
+  --danger-bg: #fde7e7;
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.12);
+
+  /* Sheet states (§2.2) */
+  --state-planned-fg: #3d4a5c;
+  --state-planned-bg: #eef1f5;
+  --state-in_progress-fg: #0b4f8a;
+  --state-in_progress-bg: #e6f0fb;
+  --state-ready_for_check-fg: #5b34a8;
+  --state-ready_for_check-bg: #f0ebfb;
+  --state-in_check-fg: #8a5300;
+  --state-in_check-bg: #fdf3e1;
+  --state-changes_requested-fg: #a33e0b;
+  --state-changes_requested-bg: #fdebe2;
+  --state-approved_for_issue-fg: #0b6b5e;
+  --state-approved_for_issue-bg: #e3f5f2;
+  --state-issued-fg: #1d6b2f;
+  --state-issued-bg: #e5f5e8;
+  --state-superseded-fg: #5f6368;
+  --state-superseded-bg: #f1f1f1;
+  --state-on_hold-fg: #4a5568;
+  --state-on_hold-bg: #eceff3;
+  --state-cancelled-fg: #6b6b6b;
+  --state-cancelled-bg: #f4f4f4;
+
+  /* Flags (§2.3) */
+  --flag-at_risk-fg: #8a5300;
+  --flag-at_risk-bg: #fff4d6;
+  --flag-late-fg: #a61b1b;
+  --flag-late-bg: #fde7e7;
+  --flag-over_allocated-fg: #a61b1b;
+  --flag-over_allocated-bg: #fde7e7;
+  --flag-under_allocated-fg: #0b4f8a;
+  --flag-under_allocated-bg: #e6f0fb;
+  --flag-timesheet_missing-fg: #8a5300;
+  --flag-timesheet_missing-bg: #fff4d6;
+  --flag-ready_to_invoice-fg: #1d6b2f;
+  --flag-ready_to_invoice-bg: #e5f5e8;
+
+  --font-sans-stack: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono-stack: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --row-height: 36px;
+}
+
+/* Dark set, applied by OS preference unless the user chose light, or by explicit choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0f141a;
+    --surface: #151b23;
+    --surface-muted: #1c232c;
+    --border: #2e3742;
+    --text: #e6eaf0;
+    --text-muted: #9aa6b5;
+    --primary: #5aa7e8;
+    --primary-hover: #7dbaee;
+    --on-primary: #0f141a;
+    --focus-ring: #7db3ff;
+    --danger: #f59a9a;
+    --danger-bg: #3d1a1a;
+    --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.5);
+    --state-planned-fg: #c9d1dc;
+    --state-planned-bg: #2a323d;
+    --state-in_progress-fg: #9cc8f2;
+    --state-in_progress-bg: #132a42;
+    --state-ready_for_check-fg: #c9b5f2;
+    --state-ready_for_check-bg: #2a2140;
+    --state-in_check-fg: #f2c77a;
+    --state-in_check-bg: #3a2c12;
+    --state-changes_requested-fg: #f5a57e;
+    --state-changes_requested-bg: #3d2216;
+    --state-approved_for_issue-fg: #84d6c8;
+    --state-approved_for_issue-bg: #123631;
+    --state-issued-fg: #8fd39c;
+    --state-issued-bg: #163420;
+    --state-superseded-fg: #a9aeb5;
+    --state-superseded-bg: #262a30;
+    --state-on_hold-fg: #b8c2cf;
+    --state-on_hold-bg: #262d37;
+    --state-cancelled-fg: #b8c2cf;
+    --state-cancelled-bg: #262d37;
+    --flag-at_risk-fg: #f2c77a;
+    --flag-at_risk-bg: #3a2c12;
+    --flag-late-fg: #f59a9a;
+    --flag-late-bg: #3d1a1a;
+    --flag-over_allocated-fg: #f59a9a;
+    --flag-over_allocated-bg: #3d1a1a;
+    --flag-under_allocated-fg: #9cc8f2;
+    --flag-under_allocated-bg: #132a42;
+    --flag-timesheet_missing-fg: #f2c77a;
+    --flag-timesheet_missing-bg: #3a2c12;
+    --flag-ready_to_invoice-fg: #8fd39c;
+    --flag-ready_to_invoice-bg: #163420;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f141a;
+  --surface: #151b23;
+  --surface-muted: #1c232c;
+  --border: #2e3742;
+  --text: #e6eaf0;
+  --text-muted: #9aa6b5;
+  --primary: #5aa7e8;
+  --primary-hover: #7dbaee;
+  --on-primary: #0f141a;
+  --focus-ring: #7db3ff;
+  --danger: #f59a9a;
+  --danger-bg: #3d1a1a;
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.5);
+  --state-planned-fg: #c9d1dc;
+  --state-planned-bg: #2a323d;
+  --state-in_progress-fg: #9cc8f2;
+  --state-in_progress-bg: #132a42;
+  --state-ready_for_check-fg: #c9b5f2;
+  --state-ready_for_check-bg: #2a2140;
+  --state-in_check-fg: #f2c77a;
+  --state-in_check-bg: #3a2c12;
+  --state-changes_requested-fg: #f5a57e;
+  --state-changes_requested-bg: #3d2216;
+  --state-approved_for_issue-fg: #84d6c8;
+  --state-approved_for_issue-bg: #123631;
+  --state-issued-fg: #8fd39c;
+  --state-issued-bg: #163420;
+  --state-superseded-fg: #a9aeb5;
+  --state-superseded-bg: #262a30;
+  --state-on_hold-fg: #b8c2cf;
+  --state-on_hold-bg: #262d37;
+  --state-cancelled-fg: #b8c2cf;
+  --state-cancelled-bg: #262d37;
+  --flag-at_risk-fg: #f2c77a;
+  --flag-at_risk-bg: #3a2c12;
+  --flag-late-fg: #f59a9a;
+  --flag-late-bg: #3d1a1a;
+  --flag-over_allocated-fg: #f59a9a;
+  --flag-over_allocated-bg: #3d1a1a;
+  --flag-under_allocated-fg: #9cc8f2;
+  --flag-under_allocated-bg: #132a42;
+  --flag-timesheet_missing-fg: #f2c77a;
+  --flag-timesheet_missing-bg: #3a2c12;
+  --flag-ready_to_invoice-fg: #8fd39c;
+  --flag-ready_to_invoice-bg: #163420;
+}

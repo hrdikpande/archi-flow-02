@@ -1,0 +1,8 @@
+{% extends "email/base.html" %}
+{% block content %}
+<p style="margin:0 0 12px">Hello {{ name }},</p>
+<p style="margin:0 0 12px">Your updates for {{ date|date:"d-M-Y" }}:</p>
+<ul style="margin:0;padding-left:20px">
+{% for i in items %}<li style="margin:0 0 8px">{% if i.link %}<a href="{{ i.link }}" style="color:#0B5FA5">{{ i.title }}</a>{% else %}{{ i.title }}{% endif %}{% if i.body %}<br><span style="color:#556172">{{ i.body }}</span>{% endif %}</li>{% endfor %}
+</ul>
+{% endblock %}

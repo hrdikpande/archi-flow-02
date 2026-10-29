@@ -1,0 +1,39 @@
+{% extends "transmittals/public_base.html" %}
+{% block title %}{{ transmittal.number }} · {{ firm }}{% endblock %}
+{% block content %}
+<div class="card">
+  <p class="muted" style="margin:0 0 8px;font-weight:600">{{ firm }}</p>
+  <h1>{% if is_notice %}New revision available{% else %}Transmittal <span class="mono">{{ transmittal.number }}</span>{% endif %}</h1>
+  <p class="muted" style="margin:0">{{ transmittal.project.code }} {{ transmittal.project.name }} · {{ purpose }} · Sent {{ date }} by {{ sender }}</p>
+  {% if transmittal.note and not is_notice %}<p style="white-space:pre-wrap">{{ transmittal.note }}</p>{% endif %}
+  <table>
+    <thead><tr><th scope="col">Sheet</th><th scope="col">Title</th><th scope="col">Revision</th><th scope="col"><span style="position:absolute;left:-9999px">Download</span></th></tr></thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td class="mono">{{ row.revision.sheet.number }}</td>
+        <td>{{ row.revision.sheet.title }}</td>
+        <td class="mono">{{ row.revision.code }}{% if row.revision.state == "superseded" %} <span class="superseded">Superseded{% if row.newer %} by {{ row.newer.code }}{% endif %}</span>{% endif %}</td>
+        <td style="text-align:right"><a class="link" href="r/{{ row.revision.pk }}">Download{% if row.revision.state == "superseded" %} (marked superseded){% endif %}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if recipient and not is_notice %}
+    {% if recipient.acknowledged_at %}
+      <p class="ack" role="status">✓ Receipt acknowledged on {{ acknowledged }}. Thank you.</p>
+    {% else %}
+      {# nosemgrep: django-no-csrf-token -- the URL token is the credential; see public.acknowledge_receipt #}
+      <form method="post" action="ack" class="ack{% if ask_ack %} ack-ask{% endif %}">
+        <p style="margin:0 0 8px">{% if ask_ack %}Please confirm you received these drawings.{% else %}Received these drawings?{% endif %}</p>
+        <button type="submit" class="btn">Acknowledge receipt</button>
+      </form>
+    {% endif %}
+  {% endif %}
+  <div class="actions">
+    <a class="btn" href="zip">Download all (ZIP)</a>
+    {% if has_cover and not is_notice %}<a class="link" href="cover">Cover sheet (PDF)</a>{% endif %}
+  </div>
+  <p class="muted" style="margin:16px 0 0;font-size:12px">This link is for you only and works until {{ expires }}. Do not use superseded revisions for construction.</p>
+</div>
+{% endblock %}

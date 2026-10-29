@@ -1,0 +1,13 @@
+# T-06 / N-05. Scrapes the app inside the compose network (Caddy hides /metrics from the
+# internet). Dashboards: Prometheus UI on 127.0.0.1:9090 (Grafana is AGPL; not used).
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+rule_files: [alerts.yml]
+alerting:
+  alertmanagers:
+    - static_configs: [{ targets: ["alertmanager:9093"] }]
+scrape_configs:
+  - job_name: drawingops-web
+    metrics_path: /metrics
+    static_configs: [{ targets: ["web:8000"] }]

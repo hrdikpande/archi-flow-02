@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{% block title %}DrawingOps{% endblock %}</title></head>
+<body style="margin:0;background:#F7F8FA;font-family:Inter,system-ui,sans-serif;color:#16202C;font-size:14px;line-height:20px">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px">
+    <tr><td align="center">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border:1px solid #D9DEE5;border-radius:8px">
+        <tr><td style="padding:16px 24px;border-bottom:1px solid #D9DEE5;font-weight:600">DrawingOps</td></tr>
+        <tr><td style="padding:24px">{% block content %}{% endblock %}</td></tr>
+        <tr><td style="padding:16px 24px;border-top:1px solid #D9DEE5;color:#556172;font-size:12px;line-height:16px">
+          {% block footer %}You received this because you use DrawingOps. Change which emails you get in your notification preferences.{% endblock %}
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

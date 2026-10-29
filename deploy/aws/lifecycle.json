@@ -1,0 +1,8 @@
+{
+  "Rules": [
+    { "ID": "staging-uploads", "Status": "Enabled", "Filter": { "Prefix": "staging/" }, "Expiration": { "Days": 2 } },
+    { "ID": "exports", "Status": "Enabled", "Filter": { "Prefix": "exports/" }, "Expiration": { "Days": 30 } },
+    { "ID": "old-versions", "Status": "Enabled", "Filter": {}, "NoncurrentVersionExpiration": { "NoncurrentDays": 30 } },
+    { "ID": "abort-multipart", "Status": "Enabled", "Filter": {}, "AbortIncompleteMultipartUpload": { "DaysAfterInitiation": 2 } }
+  ]
+}

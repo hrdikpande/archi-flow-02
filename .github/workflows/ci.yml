@@ -1,0 +1,111 @@
+# CI for every pull request and push to main (docs/01 §6 Definition of Done, N-03).
+# Pin third-party actions to commit SHAs when Dependabot is enabled (supply-chain hardening).
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_DB: drawingops, POSTGRES_USER: drawingops, POSTGRES_PASSWORD: drawingops }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U drawingops" --health-interval 3s --health-retries 20
+    defaults: { run: { working-directory: backend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with: { version: "0.12.5", enable-cache: true }
+      - run: uv python install 3.12 && uv sync --frozen
+      - name: Lint and format
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Type check
+        run: uv run mypy .
+      - name: Migrations are complete
+        run: uv run python manage.py makemigrations --check --dry-run --settings=config.settings.test
+      - name: Tests (services ≥ 85% coverage, docs/02 §13)
+        run: uv run pytest --cov --cov-report=term-missing:skip-covered --cov-fail-under=85
+      - name: Licences (no GPL/AGPL)
+        run: uv run python ../scripts/check_licences.py
+      - name: Vulnerabilities
+        run: uv run pip-audit --strict --progress-spinner off
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: frontend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build
+      - run: npm run licences
+      - run: npm audit --omit=dev --audit-level=high
+
+  contract:
+    name: OpenAPI schema and TypeScript client are current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with: { version: "0.12.5", enable-cache: true }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: cd backend && uv python install 3.12 && uv sync --frozen
+      - run: cd frontend && npm ci --no-audit --no-fund
+      - run: make schema
+      - run: git diff --exit-code -- frontend/src/lib/api/
+
+  e2e:
+    name: End-to-end and accessibility (Playwright + axe)
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: cd frontend && npm ci --no-audit --no-fund && npx playwright install --with-deps chromium
+      - run: make up
+      - run: make seed
+      - run: cd frontend && npx playwright test
+        env: { CI: "true" }
+      - if: failure()
+        run: docker compose -f deploy/docker-compose.yml --env-file .env logs --tail=200
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: playwright-report, path: frontend/playwright-report, retention-days: 14 }
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: astral-sh/setup-uv@v6
+      - name: Static analysis (Semgrep)
+        run: ./scripts/sast.sh
+      - name: Secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+      - name: Filesystem and Dockerfile scan (Trivy)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scanners: vuln,misconfig,secret
+          severity: HIGH,CRITICAL
+          exit-code: "1"
+          ignore-unfixed: true

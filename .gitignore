@@ -1,0 +1,32 @@
+# Secrets and local state
+.env
+*.env.local
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+backend/staticfiles/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/.vite/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+plugins/**/bin/
+plugins/**/obj/
+loadtest/out/
+plugins/**/bin/
+plugins/**/obj/

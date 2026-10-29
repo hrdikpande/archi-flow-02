@@ -1,0 +1,139 @@
+# Production stack (T-06, docs/02 §14). Single host, behind Caddy with automatic TLS.
+#   docker compose -f deploy/docker-compose.prod.yml --env-file /etc/drawingops/env up -d
+# Object storage is the owner's managed S3 bucket (DEC-01) with versioning on (N-02).
+# Mail goes to the firm's SMTP relay; there is no mail catcher here.
+name: drawingops-prod
+
+x-django: &django
+  image: ${DRAWINGOPS_IMAGE:-ghcr.io/latentiq/drawingops-backend}:${DRAWINGOPS_VERSION:?set DRAWINGOPS_VERSION}
+  env_file: ${ENV_FILE:-/etc/drawingops/env}
+  environment:
+    DJANGO_SETTINGS_MODULE: config.settings.prod
+  depends_on:
+    postgres: { condition: service_healthy }
+    valkey: { condition: service_healthy }
+  restart: unless-stopped
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: ["no-new-privileges:true"]
+  logging: &logging
+    driver: json-file
+    options: { max-size: "20m", max-file: "10" }
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    env_file: ${ENV_FILE:-/etc/drawingops/env}
+    # N-02: WAL archiving for 7-day point-in-time recovery (see docs/runbooks/backup-restore.md).
+    command:
+      - postgres
+      - -c
+      - wal_level=replica
+      - -c
+      - archive_mode=on
+      - -c
+      - archive_command=test ! -f /wal-archive/%f && cp %p /wal-archive/%f
+      - -c
+      - archive_timeout=300
+      - -c
+      - max_connections=200
+      - -c
+      - shared_buffers=1GB
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - walarchive:/wal-archive
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      retries: 30
+    restart: unless-stopped
+    logging: *logging
+
+  valkey:
+    image: valkey/valkey:8.1-alpine
+    command: ["valkey-server", "--appendonly", "yes"]
+    volumes: [valkey:/data]
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      retries: 20
+    restart: unless-stopped
+    logging: *logging
+
+  migrate:
+    <<: *django
+    restart: "no"
+    command: ["sh", "-c", "python manage.py migrate --noinput && python manage.py check --deploy"]
+
+  web:
+    <<: *django
+    command: ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "${WEB_WORKERS:-6}", "--threads", "4", "--timeout", "60", "--access-logfile", "-"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/livez')"]
+      interval: 10s
+      retries: 10
+
+  worker:
+    <<: *django
+    command: ["celery", "-A", "config", "worker", "-Q", "default,email,sweeps,pdf", "--concurrency", "4", "--loglevel", "INFO"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  beat:
+    <<: *django
+    command: ["celery", "-A", "config", "beat", "--loglevel", "INFO"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  caddy:
+    image: ${DRAWINGOPS_WEB_IMAGE:-ghcr.io/latentiq/drawingops-web}:${DRAWINGOPS_VERSION}
+    env_file: ${ENV_FILE:-/etc/drawingops/env}
+    ports: ["80:8080", "443:8443"]
+    volumes: [caddydata:/data, caddyconfig:/config]
+    depends_on:
+      web: { condition: service_healthy }
+    restart: unless-stopped
+    logging: *logging
+
+  # N-02: nightly base backup + logical dump, 7-day retention; WAL is archived continuously.
+  backup:
+    image: postgres:16-alpine
+    env_file: ${ENV_FILE:-/etc/drawingops/env}
+    entrypoint: ["/bin/sh", "/backup/run.sh"]
+    volumes:
+      - ./backup:/backup:ro
+      - backups:/backups
+      - walarchive:/wal-archive
+    depends_on:
+      postgres: { condition: service_healthy }
+    restart: unless-stopped
+    logging: *logging
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=30d"]
+    volumes:
+      - ./monitoring:/etc/prometheus:ro
+      - prometheus:/prometheus
+    ports: ["127.0.0.1:9090:9090"]
+    restart: unless-stopped
+    logging: *logging
+
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    command: ["--config.file=/etc/alertmanager/alertmanager.yml"]
+    volumes: ["./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"]
+    ports: ["127.0.0.1:9093:9093"]
+    restart: unless-stopped
+    logging: *logging
+
+volumes:
+  pgdata:
+  walarchive:
+  backups:
+  valkey:
+  caddydata:
+  caddyconfig:
+  prometheus:

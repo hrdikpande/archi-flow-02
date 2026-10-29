@@ -1,0 +1,1 @@
+{{ number }}: {{ items|length }} drawing{{ items|length|pluralize }} for {{ purpose }} from {{ firm }}
