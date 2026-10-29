@@ -1,6 +1,6 @@
 # DrawingOps · complete product walkthrough
 
-A narrated, client-facing video of the whole intended DrawingOps product, recorded in the interactive prototype (`demo/`), plus the inventories and audit behind it.
+A narrated, client-facing video of the whole intended DrawingOps product, recorded in the interactive prototype (`demo/`), plus the inventories and audit behind it. A 12-minute cut with burned-in subtitles is in [`short/`](short/README.md).
 
 | File | What it is |
 |---|---|
@@ -15,7 +15,8 @@ A narrated, client-facing video of the whole intended DrawingOps product, record
 | [`video-storyboard.md`](video-storyboard.md) | Chapter order, screens, on-screen actions and narration, with times |
 | [`narration-script.md`](narration-script.md) | The complete narration in video order, with times |
 | [`coverage-report.md`](coverage-report.md) | Feature-by-feature audit: demonstrated, simulated, shown, explained only, or excluded |
-| [`pipeline/`](pipeline/README.md) | Scripts that reproduce the video from the demo |
+| [`short/`](short/README.md) | **The 12-minute cut**: every part in brief, the core in detail, plus email and how the roles work together; subtitles burned in |
+| [`pipeline/`](pipeline/README.md) | Scripts that reproduce both videos from the demo |
 
 ## Before sending it to a client
 

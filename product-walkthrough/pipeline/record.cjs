@@ -1,6 +1,6 @@
 /* Records the walkthrough: runs every scene in scenes/*.cjs against demo/demo.html and writes
    BUILD/frames/*.jpg, BUILD/timeline.json and BUILD/narration.json.
-   Usage: node record.cjs [--only id,id] [--build DIR]   (Playwright with the preinstalled Chromium) */
+   Usage: node record.cjs [--only id,id] [--build DIR] [--scenes scenes/index.cjs]   (Playwright with the preinstalled Chromium) */
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
@@ -12,7 +12,7 @@ const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] :
 const BUILD = path.resolve(opt("--build", process.env.WT_BUILD || path.join(__dirname, "../build")));
 const ONLY = (opt("--only", "") || "").split(",").filter(Boolean);
 const DEMO = require("url").pathToFileURL(path.join(ROOT, "demo/demo.html")).href;
-const CHAPTERS = require("./scenes/index.cjs");
+const CHAPTERS = require(path.resolve(__dirname, opt("--scenes", "scenes/index.cjs")));
 
 (async () => {
   fs.rmSync(path.join(BUILD, "frames"), { recursive: true, force: true });

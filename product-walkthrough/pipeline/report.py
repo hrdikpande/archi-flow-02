@@ -1,15 +1,20 @@
 """Writes the walkthrough documents from the recorded build, so they always match the video:
 narration-script.md, video-storyboard.md, feature-inventory.md, coverage-report.md, chapters.txt.
 
-Usage: python report.py BUILD OUT_DIR [VIDEO.mp4]"""
+Usage: python report.py BUILD OUT_DIR [VIDEO.mp4] [--short]
+--short (the 12-minute cut): writes only chapters.txt, narration-script.md and video-storyboard.md, named for VIDEO."""
 import json, os, subprocess, sys
 from collections import OrderedDict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from features import F  # noqa: E402
 
-B, OUT = sys.argv[1], sys.argv[2]
-VIDEO = sys.argv[3] if len(sys.argv) > 3 else None
+SHORT = "--short" in sys.argv
+ARGS = [a for a in sys.argv[1:] if a != "--short"]
+B, OUT = ARGS[0], ARGS[1]
+VIDEO = ARGS[2] if len(ARGS) > 2 else None
+NAME = os.path.basename(VIDEO) if VIDEO else "complete-product-walkthrough.mp4"
+CUT = "12-minute cut · " if SHORT else ""
 tl = json.load(open(os.path.join(B, "timeline.json")))
 S = json.load(open(os.path.join(B, "schedule.json")))
 steps = {s["id"]: s for s in S["steps"]}
@@ -44,7 +49,7 @@ with open(os.path.join(OUT, "chapters.txt"), "w") as f:
 
 # ---------------- narration-script.md
 with open(os.path.join(OUT, "narration-script.md"), "w") as f:
-    f.write("# DrawingOps · narration script\n\nThe complete narration, in the order and at the times it plays in `complete-product-walkthrough.mp4`. Generated from the recording (`pipeline/report.py`), so it always matches the video. The same text is embedded as a subtitle track and saved as `complete-product-walkthrough.srt`.\n\n")
+    f.write(f"# DrawingOps · {CUT}narration script\n\nThe complete narration, in the order and at the times it plays in `{NAME}`. Generated from the recording (`pipeline/report.py`), so it always matches the video. The same text is embedded as a subtitle track and saved as `{NAME[:-4]}.srt`{', and burned into the picture as open captions' if SHORT else ''}.\n\n")
     f.write(f"Voice: Kokoro-82M (Apache-2.0), voice `af_heart`, synthesised offline. Total running time {ts(S['duration'])}.\n\n")
     for c in chapters:
         f.write(f'## {c["ch"]["num"]} · {c["ch"]["title"]}  ({ts(c["t0"])})\n\n')
@@ -61,7 +66,7 @@ def describe(events):
         if e["k"] == "hl": out.append("highlight")
     return urls, out
 with open(os.path.join(OUT, "video-storyboard.md"), "w") as f:
-    f.write("# DrawingOps · video storyboard\n\nChapter order, scenes, on-screen actions and narration for `complete-product-walkthrough.mp4` (1920×1080, 30 fps). Generated from the recorded timeline, so times, screens and actions are what the video actually shows. Screens are demo routes (`demo/demo.html#…`); `(card)` is a title or explainer card rendered in the product's own design tokens.\n\n")
+    f.write(f"# DrawingOps · {CUT}video storyboard\n\nChapter order, scenes, on-screen actions and narration for `{NAME}` (1920×1080, 30 fps). Generated from the recorded timeline, so times, screens and actions are what the video actually shows. Screens are demo routes (`demo/demo.html#…`); `(card)` is a title or explainer card rendered in the product's own design tokens.\n\n")
     f.write("| # | Chapter | Starts | Length | Main role on screen |\n|---|---|---|---|---|\n")
     for c in chapters:
         roles = []
@@ -76,6 +81,10 @@ with open(os.path.join(OUT, "video-storyboard.md"), "w") as f:
             scr = "<br>".join(f"`{u}`" if u != "(card)" else "(card)" for u in urls) or "(same screen)"
             act = "; ".join(dict.fromkeys(a.replace("|", "\\|") for a in acts)) or "hold"
             f.write(f'| {ts(steps[s["id"]]["t0"])} | {scr} | {act} | {s["say"].replace("|", "/")} |\n')
+
+if SHORT:
+    print(f"wrote chapters.txt, narration-script.md, video-storyboard.md for {NAME} ({ts(S['duration'])})")
+    sys.exit(0)
 
 # ---------------- feature-inventory.md
 mods = OrderedDict()

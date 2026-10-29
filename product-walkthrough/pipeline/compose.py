@@ -6,8 +6,10 @@ and a step ends when both its actions and its narration are done.
   python compose.py BUILD render [N]      -> BUILD/parts/chNN.mp4, N worker processes (default 3)
   python compose.py BUILD mux OUT.mp4     -> narration mix, subtitles, chapter marks, final file
   python compose.py BUILD all OUT.mp4     -> all three
+BURN_SUBS=1 draws the subtitles into the picture (open captions) and turns the soft track off by default;
+WT_TITLE sets the file's title metadata.
 """
-import json, math, os, subprocess, sys
+import bisect, json, math, os, subprocess, sys
 from concurrent.futures import ProcessPoolExecutor
 from functools import lru_cache
 import numpy as np
@@ -128,6 +130,23 @@ def cursor_sprite():
 def font(size, bold=False):
     return ImageFont.truetype(os.path.join(FONT_DIR, "Inter-SemiBold.otf" if bold else "Inter-Regular.otf"), size)
 
+BURN_SUBS = os.environ.get("BURN_SUBS", "0") == "1"   # draw subtitles into the picture (open captions)
+
+@lru_cache(maxsize=256)
+def subtitle_image(text):
+    f = font(34, True)
+    lines = text.split("\n")
+    lh = 46; pad_x, pad_y = 22, 10
+    w = int(max(f.getlength(l) for l in lines)) + 2 * pad_x
+    h = lh * len(lines) + 2 * pad_y
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([0, 0, w - 1, h - 1], 10, fill=(10, 16, 24, 205))
+    for i, l in enumerate(lines):
+        lw = f.getlength(l)
+        d.text(((w - lw) / 2, pad_y + i * lh + 4), l, font=f, fill=(255, 255, 255, 255))
+    return img
+
 @lru_cache(maxsize=64)
 def lower_third(title, sub):
     f1, f2 = font(30, True), font(22)
@@ -183,6 +202,8 @@ class Renderer:
         self.B = B; self.T = Track(S, B); self.S = S
         self.cur = cursor_sprite()
         self._img = {}; self._scaled = {}
+        self.cues = subtitle_cues(S) if BURN_SUBS else []
+        self.cue_t = [c[0] for c in self.cues]
     def src(self, f):
         if f not in self._img:
             if len(self._img) > 6: self._img.pop(next(iter(self._img)))
@@ -231,7 +252,12 @@ class Renderer:
                 lt = lower_third(L["title"], L["sub"])
                 if a < 1:
                     lt = lt.copy(); lt.putalpha(lt.getchannel("A").point(lambda v: int(v * a)))
-                img.paste(lt, (34, H - lt.height - 30 + int((1 - a) * 14)), lt)
+                img.paste(lt, (34, H - lt.height - (170 if BURN_SUBS else 30) + int((1 - a) * 14)), lt)
+        if self.cues:
+            i = bisect.bisect_right(self.cue_t, t) - 1
+            if i >= 0 and t <= self.cues[i][1]:
+                sub = subtitle_image(self.cues[i][2])
+                img.paste(sub, ((W - sub.width) // 2, H - sub.height - 30), sub)
         return img
 
 def render_part(args):
@@ -314,7 +340,7 @@ def mux(B, out):
         for i, (a, b, txt) in enumerate(cues, 1): f.write(f"{i}\n{srt_time(a)} --> {srt_time(b)}\n{txt}\n\n")
     meta = os.path.join(B, "chapters.ffmeta")
     with open(meta, "w") as f:
-        f.write(";FFMETADATA1\ntitle=DrawingOps · complete product walkthrough\nartist=LatentIQ\ncomment=Recorded in the interactive DrawingOps prototype with fictional data.\n")
+        f.write(f";FFMETADATA1\ntitle={os.environ.get('WT_TITLE', 'DrawingOps · complete product walkthrough')}\nartist=LatentIQ\ncomment=Recorded in the interactive DrawingOps prototype with fictional data.\n")
         ch = S["chapters"]
         for i, c in enumerate(ch):
             end = ch[i + 1]["t"] if i + 1 < len(ch) else S["duration"]
@@ -325,6 +351,8 @@ def mux(B, out):
                     "-map", "0:v", "-map", "1:a", "-map", "2:s", "-map_metadata", "3", "-map_chapters", "3",
                     "-c:v", "copy", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11,aresample=24000,alimiter=limit=0.84:level=false", "-c:a", "aac", "-b:a", os.environ.get("AUDIO_BITRATE", "48k"), "-ar", "24000", "-ac", "1",
                     "-c:s", "mov_text", "-metadata:s:s:0", "language=eng", "-metadata:s:a:0", "language=eng",
+                    # with burned-in subtitles the soft track stays available but off, so players never show captions twice
+                    *(["-disposition:s:0", "0"] if BURN_SUBS else []),
                     "-movflags", "+faststart", "-shortest", out], check=True)
     print("wrote", out)
 

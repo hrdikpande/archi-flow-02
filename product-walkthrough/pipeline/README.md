@@ -1,6 +1,6 @@
 # Walkthrough pipeline
 
-Reproduces `../complete-product-walkthrough.mp4` from the demo in `demo/`. Everything runs offline once the voice model is downloaded; nothing in `demo/`, `backend/` or `frontend/` is modified.
+Reproduces `../complete-product-walkthrough.mp4` and the 12-minute cut `../short/drawingops-walkthrough-12min.mp4` from the demo in `demo/`. Everything runs offline once the voice model is downloaded; nothing in `demo/`, `backend/` or `frontend/` is modified.
 
 ```text
 scenes/*.cjs ──► record.cjs ──► BUILD/frames/*.jpg + timeline.json + narration.json
@@ -45,6 +45,14 @@ product-walkthrough/pipeline/run-all.sh /tmp/wt-build product-walkthrough
 
 About 6 minutes to record, 10 minutes to synthesise the voice (cached afterwards in `TTS_CACHE`), and 15 minutes to render on 4 CPU cores.
 
+The 12-minute cut uses the same pipeline with its own scenes (`scenes-short/`) and burned-in subtitles:
+
+```bash
+product-walkthrough/pipeline/run-short.sh /tmp/wt-short product-walkthrough/short
+```
+
+`WT_SUBS_SAFE=1` (recording) drops the card footer and keeps card content above the subtitle area; `BURN_SUBS=1` (planning and rendering) draws each subtitle cue into the picture and raises the role lower-thirds above it. The soft subtitle track and the `.srt` file are written as usual.
+
 Useful while editing:
 
 ```bash
@@ -60,11 +68,13 @@ python3 product-walkthrough/pipeline/preview.py /tmp/wt portfolio               
 | `lib/recorder.cjs` | Recorder API used by scenes: `as(role)`, `go`, `click`, `type`, `select`, `check`, `files`, `zoom`, `hl`, `scrollTo`, `card` |
 | `lib/cards.js` | Title, chapter, lifecycle, tiles, device and summary cards (runs in the page) |
 | `scenes/a-intro.cjs` … `g-admin.cjs` | The 22 chapters: each step has narration (`say`) and actions (`act`) |
+| `scenes-short/short.cjs` | The 12-minute cut: 14 parts, run with `record.cjs --scenes scenes-short/index.cjs` |
 | `tts.py` | Narration audio per step with sentence timings |
 | `compose.py` | Planning, frame rendering and encoding, audio mix, subtitles, chapter markers |
 | `features.py` | Feature catalogue and feature-to-step coverage map |
-| `report.py` | Generates the storyboard, narration script, feature inventory and coverage report from the build |
+| `report.py` | Generates the storyboard, narration script, feature inventory and coverage report from the build (`--short`: storyboard, narration and chapters only) |
 | `preview.py` | Contact sheets for reviewing a recording |
-| `run-all.sh` | End-to-end build |
+| `run-all.sh` | End-to-end build of the full walkthrough |
+| `run-short.sh` | End-to-end build of the 12-minute cut (burned-in subtitles) |
 
 To change the video, edit a scene's `say` or `act`, add features to `features.py`, and rebuild; the documents regenerate from the build so they stay in step with the MP4.

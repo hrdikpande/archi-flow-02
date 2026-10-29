@@ -244,6 +244,8 @@ class Recorder {
       document.getElementById("wt-card")?.remove();
       const d = document.createElement("div"); d.id = "wt-card"; d.innerHTML = window.WT_CARD(s); document.body.appendChild(d);
     }, spec);
+    // Burned-in subtitles sit along the bottom of the frame: drop the card footer and keep card content above them.
+    if (process.env.WT_SUBS_SAFE === "1") await this.page.evaluate(() => { document.querySelector("#wt-card .foot")?.remove(); const w = document.querySelector("#wt-card .wrap"); if (w) { w.style.paddingTop = "40px"; w.style.paddingBottom = "130px"; } });
     await this.page.evaluate(() => Promise.all([...document.querySelectorAll("#wt-card img")].map((i) => (i.complete ? 0 : new Promise((r) => { i.onload = r; i.onerror = r; })))));
     await this.wait(opts.wait ?? 250);
     await this.frame(opts.trans || "fade", { card: true });
