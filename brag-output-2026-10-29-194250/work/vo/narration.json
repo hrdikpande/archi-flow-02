@@ -1,0 +1,62 @@
+[
+ {
+  "id": "s01",
+  "chapter": "hook",
+  "say": "Which drawings are late? Who's overloaded? Is site on the latest set?"
+ },
+ {
+  "id": "s02",
+  "chapter": "reveal",
+  "say": "DrawingOps answers all three, for architecture and MEP firms."
+ },
+ {
+  "id": "s03",
+  "chapter": "portfolio",
+  "say": "Owners see every project on one page, and every number opens its list."
+ },
+ {
+  "id": "s04",
+  "chapter": "register",
+  "say": "Every sheet lives in one register, from planned to issued."
+ },
+ {
+  "id": "s05",
+  "chapter": "intake",
+  "say": "Import Excel lists, drop in PDFs, or sync from Revit and AutoCAD."
+ },
+ {
+  "id": "s06",
+  "chapter": "checking",
+  "say": "Designers submit with a checklist. Leads review, with senior QC built in."
+ },
+ {
+  "id": "s07",
+  "chapter": "issue",
+  "say": "One click issues a numbered transmittal, and supersedes older revisions."
+ },
+ {
+  "id": "s08",
+  "chapter": "client",
+  "say": "Clients acknowledge from a secure link, and site only sees the current set."
+ },
+ {
+  "id": "s09",
+  "chapter": "email",
+  "say": "Every hand-off notifies the next person, and every email is tracked."
+ },
+ {
+  "id": "s10",
+  "chapter": "billing",
+  "say": "Approved stages signal Accounts, ready to invoice."
+ },
+ {
+  "id": "s11",
+  "chapter": "rest",
+  "say": "Plus workload, site RFIs, reports, advisory forecasts and a full audit trail."
+ },
+ {
+  "id": "s12",
+  "chapter": "outro",
+  "say": "Eight roles, one live record. DrawingOps, by LatentIQ."
+ }
+]

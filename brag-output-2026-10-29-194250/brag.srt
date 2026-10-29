@@ -1,0 +1,72 @@
+1
+00:00:00,350 --> 00:00:01,528
+Which drawings are late?
+
+2
+00:00:01,828 --> 00:00:02,920
+Who's overloaded?
+
+3
+00:00:03,220 --> 00:00:04,568
+Is site on the latest set?
+
+4
+00:00:05,250 --> 00:00:09,357
+DrawingOps answers all three,
+for architecture and MEP firms.
+
+5
+00:00:10,250 --> 00:00:14,421
+Owners see every project on one page,
+and every number opens its list.
+
+6
+00:00:15,250 --> 00:00:18,509
+Every sheet lives in one register,
+from planned to issued.
+
+7
+00:00:19,250 --> 00:00:24,571
+Import Excel lists, drop in PDFs,
+or sync from Revit and AutoCAD.
+
+8
+00:00:25,250 --> 00:00:27,009
+Designers submit with a checklist.
+
+9
+00:00:27,309 --> 00:00:29,882
+Leads review, with senior QC built in.
+
+10
+00:00:30,750 --> 00:00:34,807
+One click issues a numbered transmittal,
+and supersedes older revisions.
+
+11
+00:00:35,750 --> 00:00:39,674
+Clients acknowledge from a secure link,
+and site only sees the current set.
+
+12
+00:00:40,750 --> 00:00:44,732
+Every hand-off notifies the next
+person, and every email is tracked.
+
+13
+00:00:45,750 --> 00:00:48,720
+Approved stages signal Accounts, ready to invoice.
+
+14
+00:00:49,750 --> 00:00:54,885
+Plus workload, site RFIs, reports,
+advisory forecasts and a full audit trail.
+
+15
+00:00:55,750 --> 00:00:57,397
+Eight roles, one live record.
+
+16
+00:00:57,697 --> 00:00:59,473
+DrawingOps, by LatentIQ.
+

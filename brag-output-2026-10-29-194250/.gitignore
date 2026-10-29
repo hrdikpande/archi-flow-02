@@ -1,0 +1,8 @@
+# Regenerable intermediates (captures, stills, stems, silent render, fonts copied from the system)
+work/captures/
+work/stills/
+work/contact/
+work/audio/
+work/vo/audio/
+work/video-silent.mp4
+work/comp/fonts/
