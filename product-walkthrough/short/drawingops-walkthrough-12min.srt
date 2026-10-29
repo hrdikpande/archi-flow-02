@@ -1,0 +1,697 @@
+1
+00:00:00,350 --> 00:00:06,500
+This is DrawingOps: drawing and deliverable
+control for architecture and MEP design firms.
+
+2
+00:00:06,800 --> 00:00:11,800
+It works alongside AutoCAD and Revit,
+and gives everyone one live record
+
+3
+00:00:11,800 --> 00:00:15,967
+of every sheet, review,
+transmittal, deadline and fee stage.
+
+4
+00:00:16,867 --> 00:00:18,667
+Everything revolves around the sheet.
+
+5
+00:00:18,967 --> 00:00:22,774
+Every sheet moves through the same
+states, from planned to issued,
+
+6
+00:00:22,774 --> 00:00:26,870
+and fee stages move with their sheets,
+all the way to ready to invoice.
+
+7
+00:00:27,770 --> 00:00:31,595
+It was recorded in the interactive
+prototype with fictional data.
+
+8
+00:00:31,895 --> 00:00:35,999
+Outside connections, such as
+Microsoft sign-in, email delivery,
+
+9
+00:00:35,999 --> 00:00:41,080
+the CAD plugins and accounting,
+are simulated, and labelled where they appear.
+
+10
+00:00:41,380 --> 00:00:45,345
+Every part is covered briefly,
+and the core of daily work in detail.
+
+11
+00:00:46,495 --> 00:00:49,056
+Part one, in brief: signing in, and roles.
+
+12
+00:00:49,956 --> 00:00:56,234
+Staff sign in with the firm's Microsoft or Google
+account, and administrators add an authenticator code.
+
+13
+00:00:56,534 --> 00:00:58,005
+There is no public sign-up.
+
+14
+00:00:58,905 --> 00:01:01,782
+Eight roles share one system,
+from owner to accounts.
+
+15
+00:01:02,082 --> 00:01:05,744
+Clients, consultants and
+contractors need no account at all.
+
+16
+00:01:06,644 --> 00:01:08,277
+Navigation follows the role.
+
+17
+00:01:08,577 --> 00:01:10,830
+Rahul, a designer, sees his own work.
+
+18
+00:01:11,130 --> 00:01:14,981
+Nikhil, the owner, also sees the
+portfolio, reports and billing.
+
+19
+00:01:16,131 --> 00:01:18,724
+Part two, in detail: the owner's portfolio.
+
+20
+00:01:19,624 --> 00:01:25,007
+The portfolio is the owner's home page:
+every active project in the firm, on one page.
+
+21
+00:01:25,907 --> 00:01:27,427
+Five numbers lead the page.
+
+22
+00:01:27,727 --> 00:01:30,405
+20 sheets are late, and 22 are at risk.
+
+23
+00:01:30,705 --> 00:01:32,974
+The oldest review has waited 5 days.
+
+24
+00:01:33,274 --> 00:01:37,511
+2 people over-allocated this week,
+and 2 stages are ready to invoice.
+
+25
+00:01:38,411 --> 00:01:40,947
+Every number opens the exact list behind it.
+
+26
+00:01:41,247 --> 00:01:45,937
+Late and at risk are computed each morning
+from planned dates and the working calendar.
+
+27
+00:01:46,837 --> 00:01:54,003
+The projects table shows each project's fee stage,
+progress, late and at-risk counts, lead and next stage date.
+
+28
+00:01:54,303 --> 00:01:57,779
+Every count opens that project's
+register, already filtered.
+
+29
+00:01:58,679 --> 00:02:02,559
+Below, discipline workload shows
+which teams are over capacity,
+
+30
+00:02:02,559 --> 00:02:07,486
+and an advisory forecast lists the sheets
+most likely to slip, with its reasons.
+
+31
+00:02:08,386 --> 00:02:14,365
+The late list exports to Excel, PDF or CSV,
+and the bell collects the owner's alerts.
+
+32
+00:02:15,515 --> 00:02:18,919
+Part three, in detail:
+projects, fee stages and teams.
+
+33
+00:02:19,819 --> 00:02:21,801
+Opening a project shows its dashboard.
+
+34
+00:02:22,101 --> 00:02:26,276
+HSR Block B, a hospital, is in
+stage four, working drawings.
+
+35
+00:02:26,576 --> 00:02:30,249
+The headline numbers show progress
+against plan, late sheets,
+
+36
+00:02:30,249 --> 00:02:35,006
+sheets waiting for check, unacknowledged
+transmittals and open client comments.
+
+37
+00:02:35,906 --> 00:02:38,915
+The burn-up chart compares
+planned and issued sheets,
+
+38
+00:02:38,915 --> 00:02:43,853
+and the stage timeline shows each fee stage
+with its share of the fee, dates and state.
+
+39
+00:02:44,753 --> 00:02:48,640
+Priya, the project lead, creates
+projects from a fee-stage template.
+
+40
+00:02:48,940 --> 00:02:56,741
+The stage plan mirrors the appointment letter: each stage's
+share and amount, dates, required issue purposes, and senior QC.
+
+41
+00:02:57,041 --> 00:02:59,733
+Stages move by themselves as their sheets move.
+
+42
+00:03:00,633 --> 00:03:03,580
+The team tab controls who can access the project,
+
+43
+00:03:03,580 --> 00:03:08,212
+with each person's role and load,
+and the activity feed records every change.
+
+44
+00:03:09,362 --> 00:03:11,878
+Part four, in detail: the drawing register.
+
+45
+00:03:12,778 --> 00:03:16,837
+The register is the heart of DrawingOps:
+every sheet the firm owes,
+
+46
+00:03:16,837 --> 00:03:20,775
+with its owner, checker, state,
+planned date, revision and flags.
+
+47
+00:03:21,075 --> 00:03:24,191
+All one hundred and thirty-two
+sheets render instantly.
+
+48
+00:03:25,091 --> 00:03:30,949
+Search covers numbers, titles and owners:
+OT duct finds the operating-theatre ductwork.
+
+49
+00:03:31,249 --> 00:03:34,304
+Filters combine, and here are the late HVAC sheets.
+
+50
+00:03:35,204 --> 00:03:38,798
+Owners, checkers and dates edit
+in place, audited and undoable.
+
+51
+00:03:39,098 --> 00:03:46,212
+Selecting sheets brings up the bulk bar: assign, shift dates
+on the working calendar, change state, issue or export.
+
+52
+00:03:47,112 --> 00:03:48,554
+Most firms start from Excel.
+
+53
+00:03:48,854 --> 00:03:55,369
+The import wizard checks every row before anything
+is created, and explains each problem in plain words.
+
+54
+00:03:56,269 --> 00:04:03,514
+PDFs are matched to their sheets by file name, or by
+reading a scan's title block, and become draft revisions.
+
+55
+00:04:03,814 --> 00:04:08,014
+A file that breaks the naming rule
+cannot be issued until it is renamed.
+
+56
+00:04:08,914 --> 00:04:15,529
+Sheet lists can also sync from Revit and AutoCAD,
+simulated here, as proposals that a lead accepts.
+
+57
+00:04:16,429 --> 00:04:17,974
+Each sheet has its own page.
+
+58
+00:04:18,274 --> 00:04:21,923
+M-205 is in progress and late by 2 working days.
+
+59
+00:04:22,223 --> 00:04:28,612
+The current drawing opens in the built-in viewer, beside
+every review and a record of who holds which revision.
+
+60
+00:04:29,512 --> 00:04:34,889
+An older revision shows a superseded banner,
+and every download of it is stamped SUPERSEDED.
+
+61
+00:04:36,039 --> 00:04:38,541
+Part five, in brief: drafting and checking.
+
+62
+00:04:39,441 --> 00:04:43,567
+Rahul's My work lists his sheets by
+due date, with the next action on each.
+
+63
+00:04:43,867 --> 00:04:45,659
+Starting one is a single click.
+
+64
+00:04:46,559 --> 00:04:50,918
+Submitting M-206 for check needs the
+discipline's pre-check list ticked.
+
+65
+00:04:51,218 --> 00:04:54,314
+Karthik, the HVAC checker, is notified at once.
+
+66
+00:04:55,214 --> 00:05:00,071
+Anil checks his queue oldest first,
+and every return carries a comment or redline.
+
+67
+00:05:00,371 --> 00:05:05,465
+Approving A-107 sends it on to
+senior QC, which stage four requires.
+
+68
+00:05:06,365 --> 00:05:11,394
+Sunita, the senior reviewer, approves
+it, and A-107 is approved for issue.
+
+69
+00:05:12,544 --> 00:05:15,410
+Part six, in detail: issue, and issue tracking.
+
+70
+00:05:16,310 --> 00:05:20,395
+Deepa, the document controller,
+sees the approved sheets ready to issue.
+
+71
+00:05:21,295 --> 00:05:24,317
+The issue composer reserves
+the next transmittal number.
+
+72
+00:05:24,617 --> 00:05:29,903
+A-104 is blocked by the naming
+rule, and E-102 has no PDF yet.
+
+73
+00:05:30,803 --> 00:05:35,484
+One click renames A-104's file,
+and all approved sheets are selected.
+
+74
+00:05:35,784 --> 00:05:41,581
+Every issue needs a purpose, here good for construction,
+and recipients get a secure link by email.
+
+75
+00:05:42,481 --> 00:05:46,089
+The cover sheet previews exactly
+as recipients will receive it.
+
+76
+00:05:46,989 --> 00:05:50,371
+One confirmation issues the
+set on a single transmittal.
+
+77
+00:05:50,671 --> 00:05:58,424
+In the same step, earlier revisions are superseded, recipients
+are emailed, and anyone holding an older revision is told.
+
+78
+00:05:59,324 --> 00:06:05,329
+The transmittal log tracks every issue, its recipients
+and acknowledgements, including bounced emails.
+
+79
+00:06:05,629 --> 00:06:08,611
+The matrix shows which
+revision each recipient holds.
+
+80
+00:06:09,511 --> 00:06:14,407
+Each transmittal records delivery, download
+and acknowledgement times per recipient.
+
+81
+00:06:14,707 --> 00:06:21,005
+Unacknowledged transmittals are flagged, and a sent
+transmittal is never edited: a correction is a new one.
+
+82
+00:06:22,155 --> 00:06:24,519
+Part seven, in detail: the client's side.
+
+83
+00:06:24,819 --> 00:06:26,844
+No account, and nothing to install.
+
+84
+00:06:27,744 --> 00:06:33,511
+The client receives an ordinary email with a secure
+link, shown here in the demonstration mailbox.
+
+85
+00:06:34,411 --> 00:06:38,132
+The link opens the transmittal,
+with every drawing and its revision.
+
+86
+00:06:38,432 --> 00:06:42,117
+Drawings download one at a time,
+or as a zip with the cover sheet.
+
+87
+00:06:43,017 --> 00:06:45,533
+Acknowledging receipt records the date and time.
+
+88
+00:06:46,433 --> 00:06:52,249
+On site, a phone view shows only the current issued
+set, so nobody builds from a superseded sheet.
+
+89
+00:06:53,149 --> 00:06:56,368
+Back in DrawingOps, Deepa
+already sees the acknowledgement.
+
+90
+00:06:57,518 --> 00:07:00,828
+Part eight, in brief: client
+comments and stage approvals.
+
+91
+00:07:01,728 --> 00:07:05,648
+Client comments from any channel are
+logged, linked to sheets and assigned.
+
+92
+00:07:05,948 --> 00:07:09,953
+Each closes only with a written response,
+and overdue ones are flagged.
+
+93
+00:07:10,853 --> 00:07:15,614
+When every deliverable of a stage is issued,
+Priya records the client's approval,
+
+94
+00:07:15,614 --> 00:07:20,023
+with the letter as evidence, and the
+Mysuru stage becomes ready to invoice.
+
+95
+00:07:21,173 --> 00:07:23,585
+Part nine, in detail: billing signals.
+
+96
+00:07:24,485 --> 00:07:29,960
+The administrator connects the accounting system once,
+with a webhook address that is checked for safety.
+
+97
+00:07:30,260 --> 00:07:31,487
+It is simulated here.
+
+98
+00:07:32,387 --> 00:07:36,260
+Meera, in Accounts, sees what is
+ready to invoice on her home page.
+
+99
+00:07:36,560 --> 00:07:40,218
+Each signal shows the stage,
+its share of the fee, the amount,
+
+100
+00:07:40,218 --> 00:07:45,175
+the wait, and the client approval, including
+the Mysuru stage approved a moment ago.
+
+101
+00:07:46,075 --> 00:07:52,913
+Signals export as CSV, or push to the accounting
+system as a signed message, shown here instead of sent.
+
+102
+00:07:53,813 --> 00:07:59,176
+When the invoice is raised, Meera records its
+reference, and the stage's fee percentage locks.
+
+103
+00:08:00,076 --> 00:08:06,635
+Invoicing and tax stay in the accounting software,
+and Accounts never sees drawings or individual hours.
+
+104
+00:08:07,785 --> 00:08:09,901
+Part ten, in brief: everything else.
+
+105
+00:08:10,801 --> 00:08:16,865
+Workload shows planned hours against capacity,
+eight weeks ahead, and weekly timesheets build on it.
+
+106
+00:08:17,765 --> 00:08:24,326
+On site, RFIs, submittals, site reports, change
+orders and clashes link to the sheets they affect.
+
+107
+00:08:25,226 --> 00:08:30,465
+Control K finds anything, and knowledge search
+finds the reasoning behind past decisions.
+
+108
+00:08:31,365 --> 00:08:35,275
+Reports track the four baseline
+measures the firm agreed to improve.
+
+109
+00:08:36,175 --> 00:08:41,510
+Ten automation rules run themselves, and running
+a sweep twice never sends anything twice.
+
+110
+00:08:42,410 --> 00:08:48,304
+Forecasts and AI drawing checks are advisory,
+labelled, and gated on the firm's own history.
+
+111
+00:08:48,604 --> 00:08:50,368
+The figures here are simulated.
+
+112
+00:08:51,268 --> 00:08:57,938
+And administrators manage users, rules and integrations,
+with every change in an insert-only audit trail.
+
+113
+00:08:59,088 --> 00:09:01,052
+Part eleven, in detail: email.
+
+114
+00:09:01,352 --> 00:09:04,292
+DrawingOps works through the
+inbox people already use.
+
+115
+00:09:04,591 --> 00:09:10,027
+It sends every alert and transmittal, logs
+client emails that come in, and tracks each one.
+
+116
+00:09:10,927 --> 00:09:15,210
+The demonstration mailbox collects
+every email the product sends:
+
+117
+00:09:15,210 --> 00:09:19,756
+transmittals, notifications,
+revision notices, digests and summaries.
+
+118
+00:09:20,057 --> 00:09:25,241
+In production they go through the firm's own
+mail server; here, nothing is actually sent.
+
+119
+00:09:26,141 --> 00:09:29,392
+Filtering by recipient shows
+what each person received.
+
+120
+00:09:29,692 --> 00:09:33,415
+When Rahul submitted M-206,
+Karthik, the HVAC checker,
+
+121
+00:09:33,415 --> 00:09:38,241
+was emailed at once, with a button
+that opens the sheet in DrawingOps.
+
+122
+00:09:39,141 --> 00:09:41,952
+Meera's ready-to-invoice alert arrived the same way.
+
+123
+00:09:42,252 --> 00:09:45,713
+Must-not-miss alerts like this
+one are always sent instantly.
+
+124
+00:09:46,613 --> 00:09:49,133
+Transmittal emails are tracked per recipient.
+
+125
+00:09:49,433 --> 00:09:52,662
+One email on the previous HSR transmittal bounced.
+
+126
+00:09:52,962 --> 00:09:55,730
+It shows here, and Deepa resends it with one click.
+
+127
+00:09:56,630 --> 00:09:57,873
+Email comes in, too.
+
+128
+00:09:58,173 --> 00:10:05,377
+A client email forwarded to the project's own address is logged
+as a comment, matched to the sender; that is simulated here.
+
+129
+00:10:05,677 --> 00:10:08,372
+Unknown senders wait in a queue until accepted.
+
+130
+00:10:09,272 --> 00:10:15,048
+Each person chooses instant alerts, a morning
+digest, or none, with critical alerts locked on.
+
+131
+00:10:15,348 --> 00:10:18,379
+Rahul's digest gathers the rest into one email.
+
+132
+00:10:19,279 --> 00:10:22,785
+And every Monday, the owner
+gets a weekly summary by email.
+
+133
+00:10:23,935 --> 00:10:26,126
+Part twelve: how the roles work together.
+
+134
+00:10:26,426 --> 00:10:32,941
+Each role owns one part of a sheet's journey, and every
+hand-off tells the next person, in the app and by email.
+
+135
+00:10:33,241 --> 00:10:34,771
+Nobody chases anybody.
+
+136
+00:10:35,671 --> 00:10:38,312
+In this recording, that chain ran end to end.
+
+137
+00:10:38,612 --> 00:10:44,648
+Sunita's bell shows the senior QC request
+for A-107, sent the moment Anil approved it.
+
+138
+00:10:45,548 --> 00:10:56,126
+Deepa was told A-107 was ready to issue, and that
+the client had acknowledged 2026-014-TR-0033.
+
+139
+00:10:57,026 --> 00:11:02,668
+Priya, the project lead, gets a copy of every
+transmittal and acknowledgement on her projects.
+
+140
+00:11:03,568 --> 00:11:07,434
+Meera was told the moment the
+Mysuru stage was ready to invoice.
+
+141
+00:11:08,334 --> 00:11:11,705
+And Nikhil sees the whole chain
+in the project's activity feed.
+
+142
+00:11:12,005 --> 00:11:16,499
+Each person sees only what their role
+allows, so hand-offs are quick and safe.
+
+143
+00:11:17,649 --> 00:11:20,904
+Underneath, permissions are enforced on the server,
+
+144
+00:11:20,904 --> 00:11:26,840
+issued files never change, the audit trail is
+insert-only, and every project exports in full.
+
+145
+00:11:27,740 --> 00:11:32,860
+DrawingOps gives the whole firm one live record
+of every sheet, from planned to invoiced.
+
+146
+00:11:33,160 --> 00:11:34,864
+It is built by LatentIQ.
+
+147
+00:11:35,164 --> 00:11:38,657
+To see it with your own projects,
+talk to the LatentIQ team.
+
+148
+00:11:38,957 --> 00:11:40,172
+Thank you for watching.
+

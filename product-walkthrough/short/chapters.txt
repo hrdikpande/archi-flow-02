@@ -1,0 +1,14 @@
+00:00 00 Introduction
+00:46 01 Signing in and roles
+01:16 02 The owner's portfolio
+02:15 03 Projects, fee stages and teams
+03:09 04 The register and drawing management
+04:36 05 Drafting and checking
+05:12 06 Issue and issue tracking
+06:22 07 The client's side
+06:57 08 Client comments and approvals
+07:21 09 Billing signals
+08:07 10 Everything else, in brief
+08:59 11 Email: how everything stays tracked
+10:24 12 How the roles work together
+11:17 13 Close
