@@ -1,0 +1,1953 @@
+1
+00:00:00,350 --> 00:00:06,500
+This is DrawingOps: drawing and deliverable control for
+architecture and MEP design firms.
+
+2
+00:00:06,800 --> 00:00:14,879
+It works alongside the AutoCAD and Revit tools your teams
+already use, and gives everyone one live record of every sheet,
+
+3
+00:00:14,879 --> 00:00:17,817
+review, transmittal, deadline and fee stage.
+
+4
+00:00:18,717 --> 00:00:19,741
+The goal is simple.
+
+5
+00:00:20,041 --> 00:00:27,209
+A principal should be able to see, without phone calls, which
+projects are at which stage, which drawings are late or about to
+
+6
+00:00:27,209 --> 00:00:30,566
+be late, who is overloaded, and what is waiting for review.
+
+7
+00:00:30,866 --> 00:00:33,518
+And the site should never build from a superseded drawing.
+
+8
+00:00:34,418 --> 00:00:42,160
+This walkthrough uses the interactive DrawingOps prototype,
+populated with a fictional firm, Prasad Rao Associates, and
+
+9
+00:00:42,160 --> 00:00:44,502
+fictional projects, people and fees.
+
+10
+00:00:44,802 --> 00:00:53,182
+Connections to outside systems, such as Microsoft sign-in, email
+delivery, the Revit and AutoCAD plugins, and accounting, are
+
+11
+00:00:53,182 --> 00:00:58,679
+simulated in this demonstration, and each simulation is labelled
+where it appears.
+
+12
+00:00:59,579 --> 00:01:01,216
+Eight roles work in DrawingOps.
+
+13
+00:01:01,516 --> 00:01:03,312
+The owner watches the portfolio.
+
+14
+00:01:03,612 --> 00:01:06,908
+Project leads plan projects, fee stages and teams.
+
+15
+00:01:07,208 --> 00:01:09,993
+Discipline leads plan sheets and do the first check.
+
+16
+00:01:10,293 --> 00:01:12,275
+Designers move their own sheets forward.
+
+17
+00:01:12,575 --> 00:01:14,914
+Senior reviewers carry out quality checks.
+
+18
+00:01:15,214 --> 00:01:17,064
+Document controllers issue drawings.
+
+19
+00:01:17,364 --> 00:01:21,653
+Accounts receives billing signals, and the administrator
+configures the firm.
+
+20
+00:01:21,953 --> 00:01:27,743
+Clients, consultants and contractors receive drawings through
+secure links, with no account needed.
+
+21
+00:01:28,643 --> 00:01:30,443
+Everything revolves around the sheet.
+
+22
+00:01:30,743 --> 00:01:34,450
+A sheet exists from the day it is planned, before any file is
+drawn.
+
+23
+00:01:34,750 --> 00:01:41,736
+Every sheet moves through the same states: planned, in progress,
+ready for check, in check, approved for issue, and issued.
+
+24
+00:01:42,036 --> 00:01:45,702
+Issuing a new revision supersedes the old one automatically.
+
+25
+00:01:46,002 --> 00:01:50,247
+And fee stages move as their sheets move, all the way to ready
+to invoice.
+
+26
+00:01:51,147 --> 00:01:58,014
+We will follow that lifecycle from the owner's dashboard,
+through planning, drafting, checking and issuing, out to the
+
+27
+00:01:58,014 --> 00:02:03,485
+client, and on to billing, the construction stage, reporting,
+intelligence and administration.
+
+28
+00:02:04,635 --> 00:02:08,702
+Chapter one: signing in, and how roles shape what each person
+sees.
+
+29
+00:02:09,602 --> 00:02:17,607
+People sign in with the firm's Microsoft 365 or Google Workspace
+account, so there is no new password to remember.
+
+30
+00:02:17,907 --> 00:02:25,509
+There is deliberately no public sign-up: accounts come from
+single sign-on, or from an invitation sent by the administrator.
+
+31
+00:02:26,409 --> 00:02:31,025
+In this demonstration the Microsoft step is simulated with an
+account picker.
+
+32
+00:02:31,325 --> 00:02:35,305
+In production, people see their firm's own Microsoft sign-in
+page.
+
+33
+00:02:36,205 --> 00:02:43,445
+Administrators, and anyone without a firm account, use an email
+and password, protected by a six-digit code from an
+
+34
+00:02:43,445 --> 00:02:44,578
+authenticator app.
+
+35
+00:02:45,478 --> 00:02:50,682
+Local accounts can also reset a forgotten password with a code
+sent by email.
+
+36
+00:02:51,582 --> 00:02:54,799
+Once signed in, navigation follows the person's role.
+
+37
+00:02:55,099 --> 00:03:01,900
+A designer, such as Rahul, sees his own work, projects, reviews,
+workload, timesheets, knowledge and contacts.
+
+38
+00:03:02,800 --> 00:03:08,166
+The owner, Nikhil, also sees the portfolio, reports, billing
+signals and the audit trail.
+
+39
+00:03:08,466 --> 00:03:15,718
+Permissions combine an organisation role with a role on each
+project, and the same rules apply to every screen, list and
+
+40
+00:03:15,718 --> 00:03:16,141
+action.
+
+41
+00:03:17,291 --> 00:03:19,396
+Chapter two: the owner's portfolio.
+
+42
+00:03:20,296 --> 00:03:27,687
+The portfolio is the owner's home page: every active project in
+the firm, with data never more than fifteen minutes old.
+
+43
+00:03:28,587 --> 00:03:30,107
+Five numbers lead the page.
+
+44
+00:03:30,407 --> 00:03:33,085
+20 sheets are late, and 22 are at risk.
+
+45
+00:03:33,385 --> 00:03:36,032
+The oldest review has been waiting 5 days.
+
+46
+00:03:36,332 --> 00:03:40,568
+2 people over-allocated this week, and 2 stages are ready to
+invoice.
+
+47
+00:03:40,868 --> 00:03:43,638
+Each card also shows the change since last week.
+
+48
+00:03:44,538 --> 00:03:47,074
+Every number opens the exact list behind it.
+
+49
+00:03:47,374 --> 00:03:52,943
+Here are the 20 late sheets across the practice, with their
+project, owner, state and planned date.
+
+50
+00:03:53,243 --> 00:03:55,094
+The count always matches the card.
+
+51
+00:03:55,994 --> 00:03:57,664
+Late and at risk are flags.
+
+52
+00:03:57,964 --> 00:04:04,850
+They are computed every morning from each sheet's planned issue
+date and the firm's working calendar, so nobody has to remember
+
+53
+00:04:04,850 --> 00:04:05,501
+to set them.
+
+54
+00:04:06,401 --> 00:04:13,685
+Back on the portfolio, the projects table shows each project's
+current fee stage, sheets issued against planned, late and
+
+55
+00:04:13,685 --> 00:04:17,176
+at-risk counts, the project lead, and the next stage date.
+
+56
+00:04:17,476 --> 00:04:22,038
+Columns sort, and every count opens the project's register,
+already filtered.
+
+57
+00:04:22,938 --> 00:04:24,968
+The forecast column is advisory.
+
+58
+00:04:25,268 --> 00:04:28,996
+It counts open sheets that a model expects are likely to go
+late.
+
+59
+00:04:29,296 --> 00:04:31,849
+We will return to forecasting later in the walkthrough.
+
+60
+00:04:32,749 --> 00:04:40,493
+Further down, discipline workload for the next four weeks shows
+which teams are over or under capacity, and a forecast lists the
+
+61
+00:04:40,493 --> 00:04:45,272
+individual sheets most likely to slip, with the reasons behind
+each prediction.
+
+62
+00:04:46,172 --> 00:04:54,908
+Filters narrow the page by project lead or project type, and the
+late and at-risk list can be exported to Excel, PDF or CSV.
+
+63
+00:04:55,808 --> 00:05:03,126
+The bell collects the alerts that matter to this person, such as
+the weekly owner summary and stages that are ready to invoice.
+
+64
+00:05:04,276 --> 00:05:06,339
+Chapter three: the project dashboard.
+
+65
+00:05:07,239 --> 00:05:09,221
+Opening a project shows its dashboard.
+
+66
+00:05:09,521 --> 00:05:15,971
+HSR Block B is a hospital for the Navjeevan Health Trust, now in
+stage four, working drawings.
+
+67
+00:05:16,271 --> 00:05:24,057
+Tabs along the top lead to the register, stages, transmittals,
+team, activity, client comments, construction and decisions.
+
+68
+00:05:24,957 --> 00:05:32,137
+The headline numbers show sheets issued against planned, late
+and at-risk sheets, sheets waiting for a check, transmittals
+
+69
+00:05:32,137 --> 00:05:36,139
+that recipients have not yet acknowledged, and open client
+comments.
+
+70
+00:05:36,439 --> 00:05:37,903
+Each one opens its list.
+
+71
+00:05:38,803 --> 00:05:45,106
+The burn-up chart compares sheets planned with sheets actually
+issued, for the whole project or for one discipline.
+
+72
+00:05:45,406 --> 00:05:49,934
+Every chart can also be shown as a table, for accessibility and
+for export.
+
+73
+00:05:50,834 --> 00:05:58,023
+Below the chart, the stage timeline shows each fee stage with
+its share of the fee, its dates and its state, followed by the
+
+74
+00:05:58,023 --> 00:05:59,183
+list of late sheets.
+
+75
+00:06:00,083 --> 00:06:05,517
+On the right, the project card holds the client, fee, CAD
+versions and the appointment letter.
+
+76
+00:06:05,817 --> 00:06:12,348
+Each project also has its own email address for client comments,
+and a site-view link for the current drawing set.
+
+77
+00:06:13,248 --> 00:06:20,755
+Further down are this week's team allocation, with anyone over
+capacity flagged, the latest transmittals with acknowledgement
+
+78
+00:06:20,755 --> 00:06:26,280
+counts, open client comments, and an advisory forecast of the
+sheets most likely to go late.
+
+79
+00:06:27,180 --> 00:06:35,765
+The project lead or owner can export the whole project at any
+time: every record as structured data, plus the issued PDFs, in
+
+80
+00:06:35,765 --> 00:06:36,658
+one zip file.
+
+81
+00:06:36,958 --> 00:06:39,008
+The firm's data is never locked in.
+
+82
+00:06:40,158 --> 00:06:45,475
+Chapter four: projects, fee stages and teams, from the project
+lead's point of view.
+
+83
+00:06:46,375 --> 00:06:53,940
+The projects list shows every project this person can see, with
+client, type, current stage, lead, sheets issued against
+
+84
+00:06:53,940 --> 00:06:55,516
+planned, and late counts.
+
+85
+00:06:55,816 --> 00:06:59,098
+It can be searched, filtered by state and type, and exported.
+
+86
+00:06:59,998 --> 00:07:07,856
+Creating a project takes a minute: a code in the firm's format,
+the name, client, type, location, fee value, dates, the project
+
+87
+00:07:07,856 --> 00:07:11,321
+lead, the document controller, and a fee-stage template.
+
+88
+00:07:12,221 --> 00:07:14,845
+Project codes must be unique across the firm.
+
+89
+00:07:15,145 --> 00:07:20,902
+Reusing the code of HSR Block B is refused, with a message that
+says exactly why.
+
+90
+00:07:21,802 --> 00:07:29,237
+With a fresh code, creating the project lays out its fee stages
+from the template, with dates spread across the project period.
+
+91
+00:07:30,137 --> 00:07:37,116
+The stage plan mirrors the appointment letter: each stage's
+share of the fee and its amount, planned dates, the issue
+
+92
+00:07:37,116 --> 00:07:41,471
+purposes the stage requires, and whether it needs senior quality
+control.
+
+93
+00:07:42,371 --> 00:07:46,794
+Fees must total one hundred percent before the plan can be saved
+as final.
+
+94
+00:07:47,094 --> 00:07:49,812
+Until then it stays a draft, and the total is flagged.
+
+95
+00:07:50,712 --> 00:07:56,098
+Correcting the figure brings the total back to one hundred
+percent, and the plan is saved as final.
+
+96
+00:07:56,398 --> 00:07:59,287
+Every change to the plan is written to the audit trail.
+
+97
+00:08:00,187 --> 00:08:07,830
+On a live project such as HSR Block B, the appointment letter is
+attached, stages one and two are invoiced with their fee
+
+98
+00:08:07,830 --> 00:08:12,693
+percentage locked, stage three is ready to invoice, and stage
+four is active.
+
+99
+00:08:12,993 --> 00:08:16,658
+Stages move by themselves as their sheets are started and
+issued.
+
+100
+00:08:17,558 --> 00:08:24,674
+The team tab lists everyone on the project with their project
+role and discipline, their hours here this week, and their load
+
+101
+00:08:24,674 --> 00:08:25,813
+across all projects.
+
+102
+00:08:26,113 --> 00:08:31,397
+Hours are visible only to the person, their discipline lead, the
+project lead and the owner.
+
+103
+00:08:32,297 --> 00:08:38,374
+Adding someone to the team gives them access to the project, and
+they are notified in the app and by email.
+
+104
+00:08:39,274 --> 00:08:46,531
+The activity feed records every state change, issue,
+transmittal, stage event, import and client comment, newest
+
+105
+00:08:46,531 --> 00:08:50,613
+first, and can be filtered by person, event type or discipline.
+
+106
+00:08:51,763 --> 00:08:53,811
+Chapter five: the drawing register.
+
+107
+00:08:54,711 --> 00:08:57,077
+The register is the heart of DrawingOps.
+
+108
+00:08:57,377 --> 00:09:05,135
+It lists every sheet the firm owes on the project, with number,
+title, discipline, package, owner, checker, state, planned date,
+
+109
+00:09:05,135 --> 00:09:06,772
+current revision and flags.
+
+110
+00:09:07,072 --> 00:09:11,636
+All one hundred and thirty-two sheets of HSR Block B render
+instantly.
+
+111
+00:09:12,536 --> 00:09:16,218
+Search covers sheet numbers, titles, earlier numbers and owners.
+
+112
+00:09:16,518 --> 00:09:20,768
+Typing OT duct finds the operating-theatre ductwork sheets
+straight away.
+
+113
+00:09:21,668 --> 00:09:28,925
+Filters combine: discipline, stage, state, owner and package,
+plus quick toggles for late or at-risk sheets only.
+
+114
+00:09:29,225 --> 00:09:30,938
+Here are the late HVAC sheets.
+
+115
+00:09:31,838 --> 00:09:38,825
+The register can be grouped by discipline, package or stage,
+with a running count of issued and late sheets in each group.
+
+116
+00:09:39,125 --> 00:09:45,667
+Any combination of filters, grouping and sort can be saved as a
+named view, and columns can be shown or hidden.
+
+117
+00:09:46,567 --> 00:09:50,820
+Owners, checkers, packages and planned dates can be edited right
+in the table.
+
+118
+00:09:51,120 --> 00:09:56,122
+Each change saves immediately, is audited, and can be undone
+from the confirmation.
+
+119
+00:09:57,022 --> 00:10:04,797
+Selecting several sheets brings up the bulk bar: assign an owner
+or a checker, shift planned dates, move sheets into a package,
+
+120
+00:10:04,797 --> 00:10:08,225
+change their state, issue them, or export the selection.
+
+121
+00:10:09,125 --> 00:10:14,375
+Shifting dates counts working days on the firm's calendar, so
+weekends and holidays are skipped.
+
+122
+00:10:14,675 --> 00:10:18,710
+Every sheet gets its own audit entry, and the whole change can
+be undone.
+
+123
+00:10:19,610 --> 00:10:26,670
+Changing state in bulk moves only the sheets that are allowed to
+move, and reports the others with the reason they were skipped.
+
+124
+00:10:27,570 --> 00:10:29,503
+A new sheet can be added at any time.
+
+125
+00:10:29,803 --> 00:10:36,892
+It exists from the day it is planned, before any file, and its
+number is checked against the discipline's numbering rule as you
+
+126
+00:10:36,892 --> 00:10:37,171
+type.
+
+127
+00:10:38,071 --> 00:10:43,379
+Every list exports to Excel, PDF or CSV with the current filters
+applied.
+
+128
+00:10:43,679 --> 00:10:49,873
+And for people who live in the register, keyboard shortcuts
+move, select and open rows without the mouse.
+
+129
+00:10:51,023 --> 00:10:54,102
+Chapter six: getting sheets and drawings into the system.
+
+130
+00:10:55,002 --> 00:10:57,183
+Most firms start from an Excel sheet list.
+
+131
+00:10:57,483 --> 00:11:05,143
+The import wizard accepts an Excel workbook or a CSV file, and
+recognises common column headings automatically.
+
+132
+00:11:06,043 --> 00:11:08,997
+The preview checks every row before anything is created.
+
+133
+00:11:09,297 --> 00:11:17,115
+This sample contains three deliberate problems: a sheet number
+that already exists, an unknown discipline, and a date that does
+
+134
+00:11:17,115 --> 00:11:17,731
+not exist.
+
+135
+00:11:18,031 --> 00:11:19,903
+Each is explained in plain words.
+
+136
+00:11:20,803 --> 00:11:22,162
+Imports are all or nothing.
+
+137
+00:11:22,462 --> 00:11:29,595
+Once the problem rows are skipped, the valid sheets are created
+in one step, and the whole import can be undone for twenty-four
+
+138
+00:11:29,595 --> 00:11:32,460
+hours, as long as none of the new sheets has moved.
+
+139
+00:11:33,360 --> 00:11:36,059
+Undoing removes the five imported sheets again.
+
+140
+00:11:36,959 --> 00:11:38,869
+Drawings arrive as PDFs.
+
+141
+00:11:39,169 --> 00:11:48,552
+Dropping a batch of files matches each one to its sheet by the
+number in the file name, or, for scans and badly named files, by
+
+142
+00:11:48,552 --> 00:11:57,344
+reading the text of the title block: here, a scanned file called
+scan_0042 is recognised as F-101 from its title block.
+
+143
+00:11:57,644 --> 00:12:01,200
+Each file becomes a draft revision with the next revision code.
+
+144
+00:12:02,100 --> 00:12:09,923
+Every file is checked on the way in: it must be a real PDF,
+under the size limit, and not a duplicate of a file already
+
+145
+00:12:09,923 --> 00:12:10,515
+uploaded.
+
+146
+00:12:10,815 --> 00:12:17,316
+A file whose name breaks the firm's naming rule is kept as a
+draft, but blocked from issue until it is renamed.
+
+147
+00:12:18,216 --> 00:12:23,034
+With the Revit add-in and the AutoCAD plugin, sheet lists sync
+straight from the model.
+
+148
+00:12:23,334 --> 00:12:26,111
+In this demonstration the plugins are simulated.
+
+149
+00:12:26,411 --> 00:12:31,029
+New sheets arrive as proposals, and nothing is created until a
+lead accepts them.
+
+150
+00:12:31,329 --> 00:12:35,877
+When a title in the model differs from the register, the lead
+decides which one wins.
+
+151
+00:12:36,777 --> 00:12:39,952
+Accepting a proposal creates the sheet in the register.
+
+152
+00:12:40,252 --> 00:12:48,767
+Alongside, a file-storage connector reports CAD file activity,
+so everyone can see when a drawing file was last saved, and by
+
+153
+00:12:48,767 --> 00:12:49,108
+whom.
+
+154
+00:12:50,258 --> 00:12:54,643
+Chapter seven: the sheet page, where everything about one
+drawing comes together.
+
+155
+00:12:55,543 --> 00:12:58,898
+Here is M-205, OT ductwork for level two.
+
+156
+00:12:59,198 --> 00:13:03,666
+The header shows its discipline, stage, package, owner, checker
+and planned date.
+
+157
+00:13:03,966 --> 00:13:10,903
+It is in progress, late by 2 working days, and the advisory
+forecast puts its late risk at 97 percent.
+
+158
+00:13:11,803 --> 00:13:18,257
+The current revision opens in the built-in viewer: a real A3
+drawing with the firm's full title block.
+
+159
+00:13:18,557 --> 00:13:22,267
+It can be downloaded, opened in a new tab, or shown full screen.
+
+160
+00:13:23,167 --> 00:13:24,842
+Every revision stays on record.
+
+161
+00:13:25,142 --> 00:13:32,732
+Opening an earlier one shows a clear superseded banner, and
+downloading it stamps a diagonal SUPERSEDED watermark and the
+
+162
+00:13:32,732 --> 00:13:37,374
+date on every page, so an old print is never mistaken for the
+current one.
+
+163
+00:13:38,274 --> 00:13:45,352
+On the right, the reviews card lists every check and senior QC
+decision for each revision, with the reviewer and the date.
+
+164
+00:13:46,252 --> 00:13:53,564
+Who has which revision shows every person and organisation that
+received this sheet, which revision they hold, and on which
+
+165
+00:13:53,564 --> 00:13:57,844
+transmittal, so a superseded copy in someone's hands is never a
+mystery.
+
+166
+00:13:58,744 --> 00:14:06,865
+Below that, the activity timeline shows every state change with
+who made it, when, and why, followed by CAD file activity and
+
+167
+00:14:06,865 --> 00:14:10,633
+the results of AI drawing checks, which we will see later.
+
+168
+00:14:11,533 --> 00:14:19,013
+The more menu holds the less frequent actions: editing sheet
+details, working notes, and, for the project lead, overriding a
+
+169
+00:14:19,013 --> 00:14:21,184
+workflow step with a written reason.
+
+170
+00:14:21,484 --> 00:14:25,449
+Even an override stays within the allowed transitions, and is
+audited.
+
+171
+00:14:26,599 --> 00:14:28,536
+Chapter eight: a designer's day.
+
+172
+00:14:29,436 --> 00:14:31,198
+Rahul is an HVAC designer.
+
+173
+00:14:31,498 --> 00:14:39,027
+My work lists his sheets across every project by due date, each
+with its state, its flags, and the one next action that makes
+
+174
+00:14:39,027 --> 00:14:39,991
+sense right now.
+
+175
+00:14:40,891 --> 00:14:44,691
+Starting a planned sheet is a single click at the moment the
+work begins.
+
+176
+00:14:44,990 --> 00:14:49,490
+If it is the first sheet of its stage, the stage becomes active
+automatically.
+
+177
+00:14:50,390 --> 00:14:57,090
+Further down, Returned to you lists sheets that came back from a
+check, with who returned them, when, and the checker's comment.
+
+178
+00:14:57,390 --> 00:15:03,046
+On the right, hours this week compares time logged with
+capacity, and flags a missing timesheet.
+
+179
+00:15:03,946 --> 00:15:07,882
+When a drawing is ready, Rahul opens the sheet and submits it
+for check.
+
+180
+00:15:08,182 --> 00:15:11,599
+Here, M-206 already has a draft check print attached.
+
+181
+00:15:12,499 --> 00:15:15,120
+Submitting opens the discipline's pre-check list.
+
+182
+00:15:15,420 --> 00:15:20,003
+Mandatory items must be ticked, and the submission is refused
+until they are.
+
+183
+00:15:20,903 --> 00:15:28,312
+With every item ticked, the sheet moves to ready for check, the
+ticks are stored with the review, and Karthik, the HVAC checker,
+
+184
+00:15:28,312 --> 00:15:29,817
+is notified straight away.
+
+185
+00:15:30,717 --> 00:15:35,687
+A sheet that comes back carries the checker's comment and any
+redline files on its page.
+
+186
+00:15:35,987 --> 00:15:43,524
+M-204 was returned because the return-air path is not allowed
+through the corridor ceiling in the ICU zone.
+
+187
+00:15:43,824 --> 00:15:46,082
+Starting the revision puts it back in progress.
+
+188
+00:15:47,232 --> 00:15:49,999
+Chapter nine: checking, returning and approving.
+
+189
+00:15:50,899 --> 00:15:52,770
+Anil leads the architecture team.
+
+190
+00:15:53,070 --> 00:15:57,604
+His My work shows what is waiting for his check, and how long
+the oldest has waited.
+
+191
+00:15:58,504 --> 00:16:03,649
+The review queue lists every sheet waiting for him, oldest
+first, with the working days waited.
+
+192
+00:16:03,949 --> 00:16:09,830
+Anything open for more than three working days is flagged as
+overdue, and the daily sweep escalates it.
+
+193
+00:16:10,130 --> 00:16:13,948
+A senior QC tag shows that a sheet's stage needs a second check.
+
+194
+00:16:14,848 --> 00:16:21,864
+Opening a review puts the drawing and the check side by side,
+with the designer, the submission time and the review round.
+
+195
+00:16:22,764 --> 00:16:28,581
+Returning a sheet needs a comment or a redline file, so the
+designer always knows what to fix.
+
+196
+00:16:28,881 --> 00:16:34,085
+Anil writes his comment and returns A-401 to Meghna, who is
+notified at once.
+
+197
+00:16:34,985 --> 00:16:37,197
+For A-107, the check passes.
+
+198
+00:16:37,496 --> 00:16:44,710
+Because stage four requires senior quality control, Anil's
+approval sends the sheet on to the senior reviewer as a second
+
+199
+00:16:44,710 --> 00:16:45,008
+step.
+
+200
+00:16:45,308 --> 00:16:47,261
+It stays in check until she approves.
+
+201
+00:16:48,161 --> 00:16:49,125
+Going on leave?
+
+202
+00:16:49,425 --> 00:16:52,887
+A reviewer can delegate their queue to a colleague for a date
+range.
+
+203
+00:16:53,187 --> 00:16:57,843
+Reviews route to the delegate automatically, and overdue
+escalations follow them.
+
+204
+00:16:58,743 --> 00:17:06,554
+The discipline dashboard gives Anil one view of his team: late
+and at-risk sheets, the check queue, sheets approved but not yet
+
+205
+00:17:06,554 --> 00:17:10,490
+issued, assignments per person, and capacity this week and next.
+
+206
+00:17:11,390 --> 00:17:16,936
+Sunita, the senior reviewer, now finds A-107 in her queue,
+tagged senior QC.
+
+207
+00:17:17,836 --> 00:17:20,463
+Her approval moves the sheet to approved for issue.
+
+208
+00:17:20,763 --> 00:17:25,229
+The sheet's owner and the document controller are both notified
+that it is ready.
+
+209
+00:17:26,379 --> 00:17:29,125
+Chapter ten: issuing drawings with transmittals.
+
+210
+00:17:30,025 --> 00:17:31,978
+Deepa is the document controller.
+
+211
+00:17:32,278 --> 00:17:36,901
+Her My work lists the approved sheets that are ready to issue,
+project by project.
+
+212
+00:17:37,801 --> 00:17:42,510
+The issue composer has three steps: sheets, purpose and
+recipients, and a preview.
+
+213
+00:17:42,810 --> 00:17:48,285
+The next transmittal number is reserved in sequence for the
+project, and numbers are never reused.
+
+214
+00:17:49,185 --> 00:17:52,904
+Each approved sheet shows its draft PDF and whether it is ready.
+
+215
+00:17:53,204 --> 00:18:00,003
+A-104 is blocked because its file name breaks the naming rule,
+and E-102 has no PDF yet.
+
+216
+00:18:00,903 --> 00:18:05,614
+A-104 is fixed with one click, which renames the file to the
+valid name.
+
+217
+00:18:05,914 --> 00:18:12,808
+Choosing all approved sheets then selects everything that is
+ready, and E-102 waits behind for its PDF.
+
+218
+00:18:13,708 --> 00:18:15,701
+The purpose of the issue is required.
+
+219
+00:18:16,001 --> 00:18:17,582
+Here it is good for construction.
+
+220
+00:18:17,882 --> 00:18:25,603
+Recipients receive a secure link by email, paper copies handed
+over in person can be recorded too, and a note can be added for
+
+221
+00:18:25,603 --> 00:18:26,154
+everyone.
+
+222
+00:18:27,054 --> 00:18:34,644
+The preview shows the numbered cover sheet exactly as recipients
+will receive it: the project, purpose, recipients, and every
+
+223
+00:18:34,644 --> 00:18:36,223
+drawing with its revision.
+
+224
+00:18:37,123 --> 00:18:39,487
+Issuing asks for one final confirmation.
+
+225
+00:18:40,387 --> 00:18:43,283
+One click issues the whole set on a single transmittal.
+
+226
+00:18:43,583 --> 00:18:50,613
+In the same step, earlier revisions of those sheets are
+superseded, recipients get their secure link, and anyone who
+
+227
+00:18:50,613 --> 00:18:53,885
+received an older revision is told a newer one exists.
+
+228
+00:18:54,785 --> 00:19:02,223
+The transmittal log lists every issue with its purpose, sheets,
+recipients and acknowledgement status, including emails that
+
+229
+00:19:02,223 --> 00:19:05,042
+bounced, so nothing is assumed to have arrived.
+
+230
+00:19:05,942 --> 00:19:11,241
+Switching to the matrix view shows, for every sheet, which
+revision each recipient holds.
+
+231
+00:19:12,141 --> 00:19:19,845
+Each transmittal has its own page, with delivery, download and
+acknowledgement times for every recipient, and a resend button
+
+232
+00:19:19,845 --> 00:19:21,078
+for a bounced email.
+
+233
+00:19:21,378 --> 00:19:27,973
+Transmittals are never edited after sending: a correction is a
+new transmittal that references the original.
+
+234
+00:19:29,123 --> 00:19:32,970
+Chapter eleven: what the client, consultant or contractor sees.
+
+235
+00:19:33,270 --> 00:19:35,536
+No account, and no software to install.
+
+236
+00:19:36,436 --> 00:19:39,689
+Recipients get an ordinary email in their own inbox.
+
+237
+00:19:39,989 --> 00:19:45,223
+In this demonstration, emails land in a demonstration mailbox
+instead of being sent.
+
+238
+00:19:46,123 --> 00:19:53,897
+The link opens a secure page with no sign-in: the transmittal
+number, project, purpose, sender and expiry date, and every
+
+239
+00:19:53,897 --> 00:19:55,568
+drawing with its revision.
+
+240
+00:19:56,468 --> 00:20:02,126
+Drawings download one at a time, or all together as a zip file
+that includes the cover sheet.
+
+241
+00:20:03,026 --> 00:20:08,648
+Acknowledging receipt records the date and time, and the sender
+sees it on the transmittal immediately.
+
+242
+00:20:09,548 --> 00:20:16,840
+People who hold an older revision are emailed automatically when
+a newer one is issued, and told to stop using the old one.
+
+243
+00:20:17,740 --> 00:20:24,897
+On site, the project's site-view link shows only the current
+issued set, on a phone, with search and large touch targets.
+
+244
+00:20:25,197 --> 00:20:29,142
+Superseded drawings never appear, so nobody builds from an old
+sheet.
+
+245
+00:20:30,042 --> 00:20:34,379
+Back in DrawingOps, the client's acknowledgement already shows
+on the transmittal.
+
+246
+00:20:35,529 --> 00:20:40,058
+Chapter twelve: client comments, decisions, and client approval
+of a stage.
+
+247
+00:20:40,958 --> 00:20:45,695
+Client comments arrive by email, letter, phone call, WhatsApp or
+in meetings.
+
+248
+00:20:45,995 --> 00:20:52,310
+Each one is logged with a number, linked to the sheets it
+affects, assigned to a person, and tracked until it has a
+
+249
+00:20:52,310 --> 00:20:53,244
+written response.
+
+250
+00:20:54,144 --> 00:21:01,515
+A comment with no response after five days is flagged as
+overdue, and the daily sweep reminds the person it is assigned
+
+251
+00:21:01,515 --> 00:21:03,063
+to, and the project lead.
+
+252
+00:21:03,963 --> 00:21:10,707
+Logging a new comment takes seconds: what the client asked for,
+where it came from, the sheets it concerns, and who should
+
+253
+00:21:10,707 --> 00:21:11,260
+answer it.
+
+254
+00:21:11,560 --> 00:21:13,471
+The person is notified straight away.
+
+255
+00:21:14,371 --> 00:21:17,172
+A comment can only be closed with a written response.
+
+256
+00:21:17,472 --> 00:21:21,239
+The answer becomes part of the project record, and is searchable
+later.
+
+257
+00:21:23,438 --> 00:21:26,220
+Each project also has its own email address.
+
+258
+00:21:26,520 --> 00:21:31,256
+Forwarding a client's email to it logs the comment
+automatically, matched to the sender.
+
+259
+00:21:31,556 --> 00:21:34,332
+In this demonstration the forwarding is simulated.
+
+260
+00:21:35,232 --> 00:21:42,539
+Emails from senders the system does not recognise wait in a
+review queue, so nothing is logged against a project until a
+
+261
+00:21:42,539 --> 00:21:43,635
+person accepts it.
+
+262
+00:21:44,535 --> 00:21:49,982
+Decisions agreed with the client are recorded too, with their
+context and the sheets they affect.
+
+263
+00:21:50,282 --> 00:21:55,439
+They are searchable across projects, so the reasoning behind a
+design choice is never lost.
+
+264
+00:21:56,865 --> 00:22:02,402
+On the Mysuru heritage hotel, every deliverable of stage five,
+tender, has been issued.
+
+265
+00:22:02,702 --> 00:22:08,170
+The project lead now records the client's approval, attaching
+the approval letter as evidence.
+
+266
+00:22:09,070 --> 00:22:16,309
+With every deliverable issued and the client's approval on
+record, the stage becomes ready to invoice automatically, and
+
+267
+00:22:16,309 --> 00:22:19,566
+Accounts, the owner and the project lead are notified.
+
+268
+00:22:20,716 --> 00:22:23,480
+Chapter thirteen: billing signals, for Accounts.
+
+269
+00:22:24,380 --> 00:22:31,559
+First, the administrator connects the firm's accounting system:
+choose the columns to send, give a webhook address, and switch
+
+270
+00:22:31,559 --> 00:22:31,901
+it on.
+
+271
+00:22:32,201 --> 00:22:36,030
+The address is checked, so it can never point inside the firm's
+own network.
+
+272
+00:22:36,330 --> 00:22:39,232
+In this demonstration the connection is simulated.
+
+273
+00:22:40,132 --> 00:22:44,780
+Meera, in Accounts, sees the stages that are ready to invoice on
+her home page.
+
+274
+00:22:45,680 --> 00:22:52,858
+Billing signals lists every stage ready to invoice, with the
+project, the stage, its share of the fee and the amount, how
+
+275
+00:22:52,858 --> 00:22:56,418
+long it has been waiting, and the client approval behind it.
+
+276
+00:22:56,718 --> 00:23:00,019
+The Mysuru stage approved a moment ago is already here.
+
+277
+00:23:00,919 --> 00:23:08,549
+The list exports as a CSV file in the columns the accounting
+tool expects, or pushed straight to the accounting system as a
+
+278
+00:23:08,549 --> 00:23:09,480
+signed message.
+
+279
+00:23:09,780 --> 00:23:14,381
+In this demonstration the push is simulated, and the message is
+shown instead of sent.
+
+280
+00:23:15,281 --> 00:23:22,257
+Once the invoice is raised in the accounting tool, Accounts
+marks the stage invoiced with its reference and date, and the
+
+281
+00:23:22,257 --> 00:23:23,929
+stage's fee percentage locks.
+
+282
+00:23:24,829 --> 00:23:27,710
+Invoiced stages stay on record with their reference.
+
+283
+00:23:28,010 --> 00:23:35,435
+Invoicing, tax and ledgers deliberately remain in the firm's
+accounting software: DrawingOps supplies the signal, not the
+
+284
+00:23:35,435 --> 00:23:35,926
+invoice.
+
+285
+00:23:36,826 --> 00:23:45,486
+Accounts sees projects in a deliberately narrow way: stages and
+fees only, never drawings, reviews or individual people's hours.
+
+286
+00:23:46,636 --> 00:23:49,086
+Chapter fourteen: workload and timesheets.
+
+287
+00:23:49,986 --> 00:23:56,342
+Workload is a heat map of planned hours against capacity, person
+by person, for the next eight weeks.
+
+288
+00:23:56,642 --> 00:24:04,715
+Above one hundred and ten percent is flagged as over-allocated,
+and below fifty percent as under-allocated, always with an icon
+
+289
+00:24:04,715 --> 00:24:06,558
+and a word as well as colour.
+
+290
+00:24:07,458 --> 00:24:13,096
+Filters narrow the map to a discipline, a project, or only the
+people who are over or under.
+
+291
+00:24:13,396 --> 00:24:14,822
+Here is the HVAC team.
+
+292
+00:24:15,722 --> 00:24:21,268
+Clicking a cell shows where that person's hours go, project by
+project and stage by stage.
+
+293
+00:24:21,568 --> 00:24:25,582
+Hours can be edited in place, or copied forward to the next
+three weeks.
+
+294
+00:24:26,482 --> 00:24:33,140
+New allocations are added for a person, a project stage and a
+number of weeks, and the heat map updates at once.
+
+295
+00:24:34,040 --> 00:24:38,669
+The staff directory holds each person's discipline, weekly
+capacity and leave.
+
+296
+00:24:38,969 --> 00:24:44,464
+Leave and the firm's holidays reduce capacity automatically, so
+the heat map stays honest.
+
+297
+00:24:45,364 --> 00:24:50,710
+Timesheets are weekly, by project and stage, and start from the
+person's own allocations.
+
+298
+00:24:51,010 --> 00:24:52,888
+Rahul enters his hours for the week.
+
+299
+00:24:53,188 --> 00:24:57,253
+People who track time elsewhere can import a CSV file instead.
+
+300
+00:24:58,153 --> 00:25:00,849
+Submitting the week locks it and sends it for approval.
+
+301
+00:25:01,149 --> 00:25:04,512
+A timesheet missing by Tuesday noon raises a reminder.
+
+302
+00:25:05,412 --> 00:25:12,796
+Discipline leads and project leads approve submitted timesheets,
+or return them with a reason, and can remind anyone whose week
+
+303
+00:25:12,796 --> 00:25:13,784
+is still missing.
+
+304
+00:25:14,084 --> 00:25:20,448
+Individual hours are only ever visible to the person, their
+discipline lead, the project lead and the owner.
+
+305
+00:25:21,598 --> 00:25:26,119
+Chapter fifteen: notifications, alerts, and the automations
+behind them.
+
+306
+00:25:27,019 --> 00:25:29,316
+Everyone has one notification centre.
+
+307
+00:25:29,616 --> 00:25:35,201
+Rahul's shows his assignments, review results and deadline
+alerts, each linking straight to the sheet.
+
+308
+00:25:36,101 --> 00:25:42,246
+Preferences decide how each kind of alert arrives: instantly, in
+a daily digest, or not at all.
+
+309
+00:25:42,546 --> 00:25:47,266
+Alerts that must not be missed, such as a sheet returned with
+redlines, are locked on.
+
+310
+00:25:47,566 --> 00:25:50,126
+Quiet hours hold notifications overnight.
+
+311
+00:25:51,026 --> 00:25:55,170
+Everything set to digest arrives together in one email each
+morning.
+
+312
+00:25:56,070 --> 00:26:04,257
+Behind the alerts are ten automation rules, all visible to the
+administrator in one place: at-risk and late flags, superseding
+
+313
+00:26:04,257 --> 00:26:11,729
+on issue, naming checks, allocation and timesheet checks,
+overdue reviews and client comments, the ready-to-invoice
+
+314
+00:26:11,729 --> 00:26:13,418
+signal, and RFI due dates.
+
+315
+00:26:13,718 --> 00:26:15,746
+Each has its schedule and its threshold.
+
+316
+00:26:16,646 --> 00:26:18,843
+The daily sweep runs at eight every morning.
+
+317
+00:26:19,143 --> 00:26:23,151
+Running it now sends the reminders and escalations that are due
+today.
+
+318
+00:26:24,051 --> 00:26:26,538
+Running it a second time sends nothing twice.
+
+319
+00:26:26,838 --> 00:26:30,879
+Every alert goes out once per day, and the duplicates are
+counted and skipped.
+
+320
+00:26:31,179 --> 00:26:32,736
+People can trust their inbox.
+
+321
+00:26:33,636 --> 00:26:40,852
+The run log records every sweep with its counts and duration,
+and a warning appears if the morning sweep ever fails to run.
+
+322
+00:26:41,752 --> 00:26:49,564
+And every Monday morning the owner receives a weekly summary by
+email: late and at-risk sheets, overloaded people, and money
+
+323
+00:26:49,564 --> 00:26:51,013
+waiting to be invoiced.
+
+324
+00:26:52,163 --> 00:26:54,549
+Chapter sixteen: the construction stage.
+
+325
+00:26:55,449 --> 00:27:00,726
+Once a project is on site, the construction tab brings the
+site's paperwork into the same system.
+
+326
+00:27:01,026 --> 00:27:04,179
+Koramangala Tech Park is in stage six, construction.
+
+327
+00:27:04,479 --> 00:27:12,429
+RFIs are logged with the question, who raised it, whose court
+the ball is in, the due date, the linked sheets and any cost or
+
+328
+00:27:12,429 --> 00:27:13,192
+time impact.
+
+329
+00:27:13,492 --> 00:27:16,251
+RFIs due within two working days are flagged.
+
+330
+00:27:17,151 --> 00:27:24,566
+Answering an RFI can start the next revision of every linked
+sheet in the same step, so a drawing change is never forgotten.
+
+331
+00:27:26,403 --> 00:27:34,166
+Submittals from contractors, such as shop drawings, samples and
+product data, are reviewed by the right person and stamped:
+
+332
+00:27:34,166 --> 00:27:38,079
+approved, approved as noted, revise and resubmit, or rejected.
+
+333
+00:27:38,379 --> 00:27:40,547
+The stamped PDF is ready to send back.
+
+334
+00:27:41,447 --> 00:27:48,128
+Site visit reports are filed from a phone: who attended, the
+weather, observations linked to sheets, and photos.
+
+335
+00:27:48,428 --> 00:27:54,778
+Photos are compressed and their location data is removed, and
+every report exports as a PDF.
+
+336
+00:27:55,678 --> 00:28:01,851
+Change orders record cost and time, where they came from, often
+an RFI, and the sheets they affect.
+
+337
+00:28:02,151 --> 00:28:07,220
+The project lead approves or rejects them, and the approved
+total is always up to date.
+
+338
+00:28:08,120 --> 00:28:16,297
+Clash results from Navisworks, or any tool that exports BCF, are
+imported as issues with their viewpoints, disciplines, sheets,
+
+339
+00:28:16,297 --> 00:28:17,585
+assignee and status.
+
+340
+00:28:17,885 --> 00:28:23,575
+Importing again updates the existing issues by their unique ID,
+instead of duplicating them.
+
+341
+00:28:24,725 --> 00:28:27,285
+Chapter seventeen: finding anything, fast.
+
+342
+00:28:28,185 --> 00:28:31,092
+Command search opens from anywhere with Control K.
+
+343
+00:28:31,392 --> 00:28:39,355
+Typing a sheet number finds it on every project the person can
+see, and the same box finds projects, transmittals and contacts,
+
+344
+00:28:39,355 --> 00:28:40,734
+and jumps to any page.
+
+345
+00:28:41,634 --> 00:28:49,164
+Words work too: OT duct finds the operating-theatre ductwork
+sheets on both hospital projects, and the search reports how
+
+346
+00:28:49,164 --> 00:28:49,973
+long it took.
+
+347
+00:28:50,273 --> 00:28:53,319
+Results only ever include projects the person can see.
+
+348
+00:28:54,219 --> 00:28:55,727
+Knowledge search goes deeper.
+
+349
+00:28:56,027 --> 00:29:03,986
+It searches decisions, client comments, RFI answers and review
+comments, highlights the matching words, and links every result
+
+350
+00:29:03,986 --> 00:29:05,628
+to its project and sheets.
+
+351
+00:29:05,928 --> 00:29:13,427
+Here, OT ceiling HEPA finds the review comment, the client
+comment and the decision behind the operating-theatre ceilings.
+
+352
+00:29:14,327 --> 00:29:21,521
+Contacts hold every outside person and organisation, by kind:
+client, consultant, contractor or authority.
+
+353
+00:29:21,821 --> 00:29:26,479
+Adding someone whose email already exists raises a warning, so
+the list stays clean.
+
+354
+00:29:27,629 --> 00:29:29,328
+Chapter eighteen: reports.
+
+355
+00:29:30,228 --> 00:29:37,557
+The baseline report tracks the four measures the firm agreed to
+improve: the share of sheets issued after their planned date,
+
+356
+00:29:37,557 --> 00:29:44,945
+the average working days a sheet spends in check, hours logged
+against hours planned, and the days from deliverables issued to
+
+357
+00:29:44,945 --> 00:29:45,414
+invoice.
+
+358
+00:29:46,314 --> 00:29:53,806
+Each measure is broken down by month and by project, for any
+date range, with the definitions printed on the report itself.
+
+359
+00:29:54,106 --> 00:29:57,404
+The report downloads as a PDF for the monthly review.
+
+360
+00:29:58,304 --> 00:30:03,544
+Hours by project and stage compares planned and logged hours for
+every fee stage.
+
+361
+00:30:04,444 --> 00:30:10,005
+Utilisation compares billable hours with available hours, by
+discipline and by person.
+
+362
+00:30:10,305 --> 00:30:15,955
+People are listed alphabetically, never ranked: DrawingOps is
+not a productivity league table.
+
+363
+00:30:16,855 --> 00:30:23,509
+Review cycle shows the average working days in check by
+discipline and by checker, and how long sheets spend in each
+
+364
+00:30:23,509 --> 00:30:23,853
+state.
+
+365
+00:30:24,153 --> 00:30:27,461
+And the missing timesheets list sends reminders with one click.
+
+366
+00:30:28,611 --> 00:30:30,479
+Chapter nineteen: intelligence.
+
+367
+00:30:30,779 --> 00:30:38,269
+Every forecast and AI check in DrawingOps is advisory, clearly
+labelled, and switched on only after the firm has built up
+
+368
+00:30:38,269 --> 00:30:39,879
+enough of its own history.
+
+369
+00:30:40,779 --> 00:30:47,897
+A model scores every open sheet's risk of going late, and
+explains its reasons: working days left, progress so far, the
+
+370
+00:30:47,897 --> 00:30:54,238
+owner's load this week, the number of review rounds, and how
+often that discipline's sheets have run late.
+
+371
+00:30:54,538 --> 00:30:56,505
+Forecasts never change any data.
+
+372
+00:30:57,405 --> 00:31:04,596
+The workload forecast projects each discipline's hours for the
+next eight weeks beside planned allocations and capacity, and
+
+373
+00:31:04,596 --> 00:31:08,366
+shows its own measured error, so people know how far to trust
+it.
+
+374
+00:31:09,266 --> 00:31:17,422
+AI drawing checks read the title blocks and cross-references of
+uploaded PDFs, and raise findings, such as an empty checked-by
+
+375
+00:31:17,422 --> 00:31:21,889
+field, or a callout that points to a sheet missing from the
+register.
+
+376
+00:31:22,189 --> 00:31:23,908
+Each finding shows its confidence.
+
+377
+00:31:24,808 --> 00:31:27,484
+Nothing changes until a person decides.
+
+378
+00:31:27,784 --> 00:31:33,935
+Accepting a finding records the decision and tells the sheet's
+owner; dismissing it is recorded too.
+
+379
+00:31:34,835 --> 00:31:39,191
+The administrator controls each capability, off, evaluation or
+on.
+
+380
+00:31:39,491 --> 00:31:46,956
+They unlock only after a gate: at least six months of clean
+history and two thousand issued revisions, with back-tested
+
+381
+00:31:46,956 --> 00:31:49,214
+accuracy shown against simple rules.
+
+382
+00:31:49,514 --> 00:31:55,019
+In this demonstration, the history, accuracy and forecast
+figures are simulated stand-ins.
+
+383
+00:31:56,169 --> 00:31:58,168
+Chapter twenty: administration.
+
+384
+00:31:59,068 --> 00:32:06,815
+Administration starts with the organisation: the firm's name and
+address, time zone, project code format, default weekly
+
+385
+00:32:06,815 --> 00:32:14,045
+capacity, digest time, how long transmittal links stay valid,
+and when an unacknowledged transmittal is flagged.
+
+386
+00:32:14,345 --> 00:32:18,014
+Dates, times and rupee amounts follow Indian formats throughout.
+
+387
+00:32:18,914 --> 00:32:23,172
+Disciplines each carry their own sheet-number rule, with a live
+test beside it.
+
+388
+00:32:24,072 --> 00:32:30,440
+Stage templates mirror the firm's standard appointment letters,
+with their fee percentages, and one is the default.
+
+389
+00:32:31,340 --> 00:32:36,189
+Revision codes follow the firm's scheme, P for preliminary and C
+for construction.
+
+390
+00:32:36,489 --> 00:32:44,449
+A purpose is required on every issue, and ISO 19650 suitability
+codes are available for firms that use them.
+
+391
+00:32:45,349 --> 00:32:47,368
+Naming rules come with a live tester.
+
+392
+00:32:47,668 --> 00:32:54,243
+Paste a file name, and see immediately whether it passes, and if
+not, exactly why, with a valid example.
+
+393
+00:32:55,143 --> 00:33:02,553
+Pre-check checklists are defined for each discipline and stage,
+with their mandatory items, and the working calendar sets the
+
+394
+00:33:02,553 --> 00:33:07,888
+working week and holidays that every deadline, escalation and
+working-day count relies on.
+
+395
+00:33:08,788 --> 00:33:14,764
+Users and roles shows each person's organisation role, how they
+sign in, and when they were last seen.
+
+396
+00:33:15,064 --> 00:33:19,604
+People can be deactivated, but never deleted, so their history
+stays intact.
+
+397
+00:33:19,904 --> 00:33:21,883
+New people are invited by email.
+
+398
+00:33:22,783 --> 00:33:24,774
+The invitation arrives by email.
+
+399
+00:33:25,074 --> 00:33:32,769
+The new person chooses a password, or signs in with the firm's
+Microsoft account, and sees projects once a project lead adds
+
+400
+00:33:32,769 --> 00:33:33,700
+them to a team.
+
+401
+00:33:34,600 --> 00:33:42,713
+Integrations lists every connection with its status: single
+sign-on, local accounts with two-factor, outbound and inbound
+
+402
+00:33:42,713 --> 00:33:49,082
+email, the Revit and AutoCAD plugins, the file-storage
+connector, clash import, and accounting.
+
+403
+00:33:49,382 --> 00:33:53,253
+Scoped API tokens are created here and shown only once.
+
+404
+00:33:53,553 --> 00:33:59,524
+Options that depend on the firm's tools, such as Autodesk Forma
+and Bluebeam, are marked as conditional.
+
+405
+00:34:00,424 --> 00:34:08,675
+Onboarding loads a live project from a template workbook and a
+folder of issued PDFs, including historic revisions, without
+
+406
+00:34:08,675 --> 00:34:10,687
+sending a single notification.
+
+407
+00:34:10,987 --> 00:34:14,453
+Problems in the workbook are listed before anything is loaded.
+
+408
+00:34:15,353 --> 00:34:22,619
+Finally, the audit trail records every change: who made it,
+when, what it was before and after, from which address, with a
+
+409
+00:34:22,619 --> 00:34:23,274
+request ID.
+
+410
+00:34:23,574 --> 00:34:30,799
+Rows can never be edited or deleted, and the full trail exports
+as a background job that emails a link when it is ready.
+
+411
+00:34:31,949 --> 00:34:35,393
+Chapter twenty-one: the qualities that run through the whole
+product.
+
+412
+00:34:36,293 --> 00:34:43,159
+Every screen also works in a dark theme, chosen from the account
+menu, and in a compact or comfortable row height.
+
+413
+00:34:44,059 --> 00:34:48,723
+Status is always shown with colour, an icon and a word, never
+colour alone.
+
+414
+00:34:49,023 --> 00:34:53,749
+Every chart has a table view, and keyboard shortcuts cover the
+most frequent actions.
+
+415
+00:34:54,649 --> 00:34:58,708
+Underneath, DrawingOps is designed so that the record can be
+trusted.
+
+416
+00:34:59,008 --> 00:35:05,727
+Permissions are enforced on the server for every request, for
+each person's organisation role and project role.
+
+417
+00:35:06,027 --> 00:35:08,697
+Issued files are never altered or overwritten.
+
+418
+00:35:08,997 --> 00:35:10,739
+The audit trail is insert-only.
+
+419
+00:35:11,039 --> 00:35:13,051
+Automations are safe to run twice.
+
+420
+00:35:13,351 --> 00:35:16,405
+And a project's full record can be exported at any time.
+
+421
+00:35:17,305 --> 00:35:24,783
+DrawingOps gives an architecture and MEP firm one live record of
+every sheet, from the day it is planned to the day it is
+
+422
+00:35:24,783 --> 00:35:30,902
+invoiced: who owns it, where it stands, what is late, who is
+overloaded, and what the client holds.
+
+423
+00:35:31,202 --> 00:35:36,896
+It works alongside the CAD tools the firm already uses, and it
+keeps the site on the current set.
+
+424
+00:35:37,796 --> 00:35:39,975
+DrawingOps is built by LatentIQ.
+
+425
+00:35:40,275 --> 00:35:45,113
+To see it working with your own projects and sheet lists, talk
+to the LatentIQ team.
+
+426
+00:35:45,413 --> 00:35:46,627
+Thank you for watching.
+

@@ -1,0 +1,22 @@
+00:00 00 Introduction
+02:04 01 Signing in and roles
+03:17 02 Owner: portfolio dashboard
+05:04 03 Project dashboard
+06:40 04 Projects, fee stages and teams
+08:51 05 The drawing register
+10:51 06 Getting drawings in: import, PDFs and CAD sync
+12:50 07 The sheet page
+14:26 08 Designer: my work and pre-checks
+15:47 09 Checking and senior QC
+17:26 10 Issue and transmittals
+19:29 11 The client's side
+20:35 12 Client comments, decisions and approvals
+22:20 13 Billing signals
+23:46 14 Workload and timesheets
+25:21 15 Notifications, alerts and automation
+26:52 16 The construction stage
+28:24 17 Search and knowledge
+29:27 18 Reports and baseline metrics
+30:28 19 Intelligence: forecasts and drawing checks
+31:56 20 Administration
+34:32 21 Built for everyday use and for trust

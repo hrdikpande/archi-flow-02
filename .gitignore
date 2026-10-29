@@ -30,3 +30,6 @@ plugins/**/obj/
 loadtest/out/
 plugins/**/bin/
 plugins/**/obj/
+
+# Walkthrough build output (recreated by product-walkthrough/pipeline/run-all.sh)
+product-walkthrough/build/
