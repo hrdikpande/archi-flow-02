@@ -83,7 +83,7 @@ module.exports = [
       {
         say: "Navigation follows the role. Rahul, a designer, sees his own work. Nikhil, the owner, also sees the portfolio, reports and billing.",
         act: async (r) => {
-          await r.as("designer"); await r.go("#/", { wait: 800 }); await r.hl("#primary-nav ul"); await r.pause(1.2);
+          await r.as("designer"); await r.go("#/", { wait: 800 }); await r.hl("#primary-nav ul"); await r.pause(3);
           await r.as("owner"); await r.go("#/", { wait: 800 }); await r.hl("#primary-nav ul");
         },
       },
@@ -182,7 +182,7 @@ module.exports = [
         say: "Search covers numbers, titles and owners: OT duct finds the operating-theatre ductwork. Filters combine, and here are the late HVAC sheets.",
         act: async (r) => {
           r.zoomOut(); await r.type("#reg-q", "OT duct", { chunk: 1, after: 500 }); await r.frame("cut");
-          await r.pause(1);
+          await r.pause(3.5);
           await r.go("#/projects/p1/register", { wait: 700, shot: false });
           await r.select("select[data-change=reg-f][data-k=disc]", "M", { wait: 700 });
           await r.check('label.fchip input[data-k=late]', { wait: 700 });
@@ -240,7 +240,7 @@ module.exports = [
           await r.go(`#/projects/p1/sheets/${id}`, { wait: 2200 });
           d.m205 = await r.eval((id) => { const s = DO.store.sheet(id); const f = DO.store.flagsFor(s)[0]; return { state: DO.store.label(s.state).toLowerCase(), flag: f ? (f.kind === "late" ? `late by ${f.n} working day${f.n === 1 ? "" : "s"}` : f.text.toLowerCase()) : "on track" }; }, id);
           await r.zoom(["main h2.display", "[data-act=sd-more]"], { pad: 16, max: 1.6 });
-          await r.pause(1.2); r.zoomOut();
+          await r.pause(3.5); r.zoomOut();
           await r.zoom("main iframe", { pad: 40, max: 1.45 });
         },
       },
@@ -281,7 +281,7 @@ module.exports = [
         act: async (r) => {
           await r.clearToasts();
           await r.as("checker"); await r.go("#/reviews", { wait: 800 }); await r.zoom("main table", { pad: 8, max: 1.35, anchor: "top" });
-          await r.pause(1.2);
+          await r.pause(2.2);
           const id = await openReviewId(r, "A-107");
           await r.go(`#/reviews?open=${id}`, { wait: 2200 });
           await r.scrollIntoView("#rq-approve-btn", 0.6); await r.frame("cut");
@@ -326,6 +326,7 @@ module.exports = [
           r.hlOff(); r.zoomOut();
           await r.click("[data-act=sd-rename]", { wait: 500 });
           await r.click("[data-act=ic-all]", { wait: 600 });
+          await r.pause(1.5);
           await r.scrollIntoView("select[data-change=ic-purpose]", 0.3);
           await r.select("select[data-change=ic-purpose]", "GFC", { wait: 500 });
           await r.zoom('main section.card:has-text("Purpose and recipients")', { pad: 10, max: 1.4, anchor: "top" });
@@ -349,7 +350,7 @@ module.exports = [
         say: "The transmittal log tracks every issue, its recipients and acknowledgements, including bounced emails. The matrix shows which revision each recipient holds.",
         act: async (r) => {
           await r.clearToasts(); await r.go("#/projects/p1/transmittals", { wait: 900 }); await r.zoom("main table", { pad: 8, max: 1.35, anchor: "top" });
-          await r.pause(1.2); r.zoomOut();
+          await r.pause(4.5); r.zoomOut();
           await r.click("[data-act=tm-view][data-v=matrix]", { wait: 900 });
         },
       },
@@ -380,7 +381,7 @@ module.exports = [
       },
       {
         say: "The link opens the transmittal, with every drawing and its revision. Drawings download one at a time, or as a zip with the cover sheet.",
-        act: async (r) => { r.zoomOut(); await r.click(".email-frame a.btn.primary", { wait: 1000, trans: "fade" }); await r.pause(1); await r.click("[data-act=ext-zip]", { wait: 900 }); },
+        act: async (r) => { r.zoomOut(); await r.click(".email-frame a.btn.primary", { wait: 1000, trans: "fade" }); await r.pause(2); await r.click("[data-act=ext-zip]", { wait: 900 }); },
       },
       {
         say: "Acknowledging receipt records the date and time.",
@@ -453,7 +454,7 @@ module.exports = [
         say: "Meera, in Accounts, sees what is ready to invoice on her home page. Each signal shows the stage, its share of the fee, the amount, the wait, and the client approval, including the Mysuru stage approved a moment ago.",
         act: async (r) => {
           await r.as("accounts"); await r.go("#/", { wait: 800 }); await r.zoom('main section.card:has-text("Ready to invoice")', { pad: 14, max: 1.5 });
-          await r.pause(1.2);
+          await r.pause(2.5);
           await r.go("#/billing", { wait: 900 }); await r.zoom("main table", { pad: 10, max: 1.4, anchor: "top" });
         },
       },
@@ -548,7 +549,7 @@ module.exports = [
           await r.go(`#/projects/p1/transmittals/${id}`, { wait: 900 });
           await r.zoom('main section.card:has-text("Recipients")', { pad: 10, max: 1.5, anchor: "top" });
           await r.hl('main section.card:has-text("Recipients") tr:has(.pill.bad)');
-          await r.pause(1.2);
+          await r.pause(4.5);
           r.hlOff();
           await r.click('main section.card:has-text("Recipients") tr:has(.pill.bad) [data-act=td-resend]', { wait: 900 });
         },
@@ -562,6 +563,7 @@ module.exports = [
           await r.pause(1);
           r.hlOff();
           await r.click("[data-act=cm-sim]", { wait: 1000 });
+          await r.pause(4);
           await r.clearToasts();
           await r.click("[data-act=cm-queue]", { wait: 600 }); await r.zoom(".dialog, .drawer", { pad: 20, max: 1.5 });
           await r.pause(1);
@@ -573,7 +575,7 @@ module.exports = [
         act: async (r) => {
           await r.key("Escape", { shot: false }); r.zoomOut();
           await r.as("designer"); await r.go("#/settings/notifications", { wait: 800 }); await r.zoom("main .card >> nth=0", { pad: 8, max: 1.35, anchor: "top" });
-          await r.pause(1.2); r.zoomOut();
+          await r.pause(4); r.zoomOut();
           await r.click("[data-act=pf-digest]", { wait: 900, shot: false });
           const mid = await r.eval(() => DO.store.S.emails.find((m) => m.kind === "digest")?.id);
           await r.go(`#/mailbox?m=${mid}`, { wait: 800 }); await r.zoom(".email-frame", { pad: 20, max: 1.5 });
