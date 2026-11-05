@@ -1,6 +1,6 @@
 # System libraries: Pango/HarfBuzz for WeasyPrint (cover sheets, watermarks, PDF exports),
 # DejaVu fonts (include the ₹ glyph), Tesseract for scanned title blocks (F-50).
-FROM python:3.12-slim AS base
+FROM python:3.15-slim AS base
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy \
     UV_PROJECT_ENVIRONMENT=/opt/venv PATH="/opt/venv/bin:$PATH"
 RUN apt-get update \
